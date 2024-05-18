@@ -1,16 +1,27 @@
 const { app, BrowserWindow } = require('electron/main')
 const path = require('node:path')
-
+const url = require('url');
 function createWindow () {
-  const win = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
+
       preload: path.join(__dirname, 'preload.js')
     }
-  })
 
-  win.loadFile('index.html')
+  })
+  mainWindow.webContents.openDevTools();
+
+  // win.loadFile('index.html')
+  const startUrl = url.format({
+    // pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, './app/dist/index.html'),
+    protocol: 'file',
+  });
+
+  // mainWindow.loadURL('http://localhost:5173/');
+  mainWindow.loadURL(startUrl)
 }
 
 app.whenReady().then(() => {
