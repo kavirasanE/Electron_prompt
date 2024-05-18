@@ -1,6 +1,6 @@
 {
   "name": "electron",
-  "version": "v1.0.0",
+  "version": "1.0.0",
   "description": "This is an Prompt Setup",
   "main": "main.js",
   "scripts": {
