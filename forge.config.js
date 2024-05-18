@@ -12,7 +12,7 @@ module.exports = {
         },
         prerelease: false,
         draft: true,
-        version: "1.0.0"
+        version: "v1.0.0"
       }
     }
   ],
