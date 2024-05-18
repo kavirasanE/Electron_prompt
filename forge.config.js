@@ -7,8 +7,8 @@ module.exports = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'kavirasanE',
-          name: 'Electron_prompt'
+          owner: 'github-user-name',
+          name: 'github-repo-name'
         },
         prerelease: false,
         draft: true
