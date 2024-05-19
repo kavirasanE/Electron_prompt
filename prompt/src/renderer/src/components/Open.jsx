@@ -20,13 +20,13 @@ const Open = () => {
   return (
     <>
       <img alt="logo" className="logo" src={electronLogo} />
-      <div className="creator">Welcome to promptworks</div>
+      <div className="creator"></div>
       <div className="text">
-        Build an Electron app with <span className="react">Kavirasan</span>
+      Welcome to   <span className="react">promptworks</span>
       </div>
-      <p className="tip">
+      {/* <p className="tip">
         Please try pressing <code>F12</code> to open the devTool
-      </p>
+      </p> */}
       <div className="actions">
         <div className="action">
           <Link to="/Home">Get Started</Link>
@@ -41,7 +41,7 @@ const Open = () => {
         </button>
         {data ? <p> Data is {data}</p> : <p>No data</p>} */}
       </div>
-      <Versions></Versions>
+      {/* <Versions></Versions> */}
  
     </>
   )
