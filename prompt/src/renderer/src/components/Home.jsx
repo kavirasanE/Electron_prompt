@@ -1,5 +1,6 @@
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
   const [command, setCommand] = useState('')
@@ -23,8 +24,9 @@ export default function Home() {
       })
   }
   return (
-    <div>
-      <div className=" px-24 pt-5">
+    <div className='bg-white w-screen'>
+      <div className="px-24 pt-5">
+      <Link to="/" className='text-black'>Back to Home</Link>
         <form className="flex max-w-md flex-col gap-4">
           <div>
             <div className="mb-2 block">
