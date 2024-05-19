@@ -28,7 +28,7 @@ export default function Home() {
         <form className="flex max-w-md flex-col gap-4">
           <div>
             <div className="mb-2 block">
-              <Label value="Test your commands" />
+              <Label value="Test your commands here" />
             </div>
             <TextInput
               type="text"
