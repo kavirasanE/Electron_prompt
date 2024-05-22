@@ -61,32 +61,7 @@ app.whenReady().then(() => {
     a = 'im here in react '
     return a
   })
-  // ipcMain.handle('command', async(event, serializedCommand) => {
-  //   console.log(serializedCommand)
-  //   const { command } = JSON.parse(serializedCommand);
-  //   console.log('Received command:', command);
-  //   // console.log('Received command:', ab);
-  //   return JSON.stringify(command);
-  // })
-
-  // ipcMain.handle('command', async (event, serializedCommand) => {
-  //   const { command } = JSON.parse(serializedCommand)
-  //   let res ="";
-
-  //   output(command, (commands) => {
-  //     //  console.log("out");
-  //     // console.log(commands);
-  //      res +=commands;
-  //     //  console.log(res);
-
-  //   })
-  //   console.log(output);
-  //   return JSON.stringify(output);
-
-  //   // console.log('Received command:', command);
-  //   // console.log('Received command:', ab);
-  // })
-
+ 
   ipcMain.handle('command', async (event, serializedCommand) => {
     const { command } = JSON.parse(serializedCommand)
     let res = ''
@@ -110,7 +85,7 @@ app.whenReady().then(() => {
       return JSON.stringify({ error: error.message })
     }
   })
-  ipcMain.handle('logs')
+
 
   createWindow()
 

@@ -25,9 +25,9 @@ const Takelogs = () => {
     }
   }
 
-  const handleLogs = () => {
-    window.electron.ipcRenderer.send('logs')
-  }
+  // const handleLogs = () => {
+  //   window.electron.ipcRenderer.send('logs')
+  // }
   return (
     <div className="bg-white w-screen h-screen p-5">
       <div className="flex justify-between ">
