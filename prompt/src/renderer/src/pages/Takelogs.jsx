@@ -18,25 +18,16 @@ const Takelogs = () => {
     // console.log(res.substring(0, lastIndex))
 
     if (lastIndex !== -1) {
-        setFolder(res.substring(0, lastIndex + 1));
+      setFolder(res.substring(0, lastIndex + 1))
       console.log(res.substring(0, lastIndex + 1))
     } else {
       console.log(res)
     }
   }
 
-  // const handleChange = (e) => {
-  //     const fileName = e.target.files[0].name;
-  //     const filePath = e.target.value; // This is the path, but it's usually not the full path in browser environments
-
-  //     // Extract directory path using lastIndexOf
-  //     const lastIndex = filePath.lastIndexOf('\\');
-  //     const directoryPath = lastIndex !== -1 ? filePath.substring(0, lastIndex + 1) : filePath;
-
-  //     console.log("File Name:", fileName);
-  //     console.log("Full File Path:", filePath); // Typically doesn't give full path in browsers
-  //     console.log("Directory Path:", directoryPath);
-  // }
+  const handleLogs = () => {
+    window.electron.ipcRenderer.send('logs')
+  }
   return (
     <div className="bg-white w-screen h-screen p-5">
       <div className="flex justify-between ">
@@ -53,6 +44,9 @@ const Takelogs = () => {
         <input type="file" webkitdirectory="true" dir="true" onChange={handleChange} />
         <p className="text-black">{folder && folder}</p>
       </div>
+      <Button className="m-5" onClick={handleLogs}>
+        Connected Devices
+      </Button>
       <div className="border border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
         <pre className="text-white/80"></pre>
       </div>

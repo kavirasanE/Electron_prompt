@@ -9,8 +9,8 @@ export default function Home() {
   console.log(window)
 
   const handleSend = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
     const serializableCommand = JSON.stringify({ command })
     window.electron.ipcRenderer
       .invoke('command', serializableCommand)
@@ -26,13 +26,14 @@ export default function Home() {
       })
   }
 
- 
   return (
-    <div className='bg-white w-screen h-screen p-5'>
-    <div className='flex justify-between '>
-      <Online/>
-      <Link to="/" className='p-2 border-2 rounded-lg text-white bg-black/80'>Back to Home</Link>
-    </div>
+    <div className="bg-white w-screen h-screen p-5">
+      <div className="flex justify-between ">
+        <Online />
+        <Link to="/" className="p-2 border-2 rounded-lg text-white bg-black/80">
+          Back to Home
+        </Link>
+      </div>
       <div className="px-24 pt-5">
         <form className="flex max-w-md flex-col gap-4">
           <div>
@@ -52,9 +53,9 @@ export default function Home() {
           </Button>
         </form>
       </div>
-      <div className="border border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
+            <div className="border border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
         <pre className='text-white/80'>{data}</pre>
-    
+      
       </div>
     </div>
   )

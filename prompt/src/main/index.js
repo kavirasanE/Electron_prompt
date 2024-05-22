@@ -51,7 +51,7 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
-
+ 
   // ipcMain.on('adb', () => {
   //   output();
   //   console.log('output')
@@ -72,47 +72,45 @@ app.whenReady().then(() => {
   // ipcMain.handle('command', async (event, serializedCommand) => {
   //   const { command } = JSON.parse(serializedCommand)
   //   let res ="";
-    
+
   //   output(command, (commands) => {
   //     //  console.log("out");
   //     // console.log(commands);
   //      res +=commands;
   //     //  console.log(res);
-      
+
   //   })
   //   console.log(output);
   //   return JSON.stringify(output);
 
-    
-       
-    
   //   // console.log('Received command:', command);
   //   // console.log('Received command:', ab);
   // })
 
   ipcMain.handle('command', async (event, serializedCommand) => {
-    const { command } = JSON.parse(serializedCommand);
-    let res = "";
+    const { command } = JSON.parse(serializedCommand)
+    let res = ''
 
     // Assuming `output` is a function that accepts a command and a callback
     // If `output` is synchronous or already uses a callback pattern,
     // wrap it in a Promise to use `await` properly.
     const outputPromise = new Promise((resolve, reject) => {
-        output(command, (commands) => {
-            res += commands;
-            resolve(res);
-        });
-    });
+      output(command, (commands) => {
+        res += commands
+        resolve(res)
+      })
+    })
 
     try {
-        const result = await outputPromise;
-        console.log(result);
-        return JSON.stringify(result);
+      const result = await outputPromise
+      console.log(result)
+      return JSON.stringify(result)
     } catch (error) {
-        console.error("Error executing command:", error);
-        return JSON.stringify({ error: error.message });
+      console.error('Error executing command:', error)
+      return JSON.stringify({ error: error.message })
     }
-});
+  })
+  ipcMain.handle('logs')
 
   createWindow()
 
