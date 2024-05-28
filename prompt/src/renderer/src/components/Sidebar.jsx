@@ -46,6 +46,9 @@ export function Online() {
                     <Sidebar.Item href="/Home">
                       Test your Commands
                     </Sidebar.Item>
+                    <Sidebar.Item href="/demo">
+                      Test
+                    </Sidebar.Item>
                   </Sidebar.ItemGroup>
                   {/* <Sidebar.ItemGroup>
                     <Sidebar.Item href="https://github.com/themesberg/flowbite-react/" icon={HiClipboard}>

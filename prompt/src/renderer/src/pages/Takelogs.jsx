@@ -44,7 +44,7 @@ const Takelogs = () => {
         <input type="file" webkitdirectory="true" dir="true" onChange={handleChange} />
         <p className="text-black">{folder && folder}</p>
       </div>
-      <Button className="m-5" onClick={handleLogs}>
+      <Button className="m-5" >
         Connected Devices
       </Button>
       <div className="border border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">

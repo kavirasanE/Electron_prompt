@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import output from './output'
+import trackDevice from './trackDevice'
 
 function createWindow() {
   // Create the browser window.
@@ -51,17 +52,17 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
- 
+
   // ipcMain.on('adb', () => {
   //   output();
   //   console.log('output')
   // })
-
+  trackDevice()
   ipcMain.handle('adb', async (event, a) => {
     a = 'im here in react '
     return a
   })
- 
+
   ipcMain.handle('command', async (event, serializedCommand) => {
     const { command } = JSON.parse(serializedCommand)
     let res = ''
@@ -85,7 +86,6 @@ app.whenReady().then(() => {
       return JSON.stringify({ error: error.message })
     }
   })
-
 
   createWindow()
 
