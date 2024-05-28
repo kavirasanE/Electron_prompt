@@ -4,6 +4,11 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import output from './output'
 import trackDevice from './trackDevice'
+// const WebSocket = require('ws');
+import WebSocket from 'ws'
+import path from 'path'
+import cors from "cors";
+// const path = require('path');
 
 function createWindow() {
   // Create the browser window.
@@ -86,6 +91,59 @@ app.whenReady().then(() => {
       return JSON.stringify({ error: error.message })
     }
   })
+
+  // ipcMain.handle('command', async (event, serializedCommand) => {
+  //   const wss = new WebSocket.Server({ port: 8080 })
+
+  //   wss.on('connection', (ws) => {
+  //     console.log('Client connected')
+
+  //     ws.on('message', (message) => {
+  //       const { command } = JSON.parse(message)
+  //       let res = ''
+
+  //       // Assuming `output` is a function that accepts a command and a callback
+  //       const outputPromise = new Promise((resolve, reject) => {
+  //         output(command, (commands) => {
+  //           res += commands
+  //           resolve(res)
+  //         })
+  //       })
+
+  //       outputPromise
+  //         .then((result) => {
+  //           ws.send(JSON.stringify(result))
+  //         })
+  //         .catch((error) => {
+  //           console.error('Error executing command:', error)
+  //           ws.send(JSON.stringify({ error: error.message }))
+  //         })
+  //     })
+
+  //     ws.on('close', () => {
+  //       console.log('Client disconnected')
+  //     })
+
+  //     // Example: Sending a message to the client
+  //     ws.send('Hello from the WebSocket server')
+  //   })
+  // })
+
+
+
+
+
+
+
+
+
+
+    app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow()
+      }
+    })
+  
 
   createWindow()
 
