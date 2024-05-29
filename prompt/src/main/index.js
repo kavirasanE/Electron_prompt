@@ -89,21 +89,20 @@ app.whenReady().then(() => {
     return a
   })
 
-  
-const adb = require('adbkit');
+  const adb = require('adbkit');
 
 ipcMain.handle('connect', async (event, command) => {
     return new Promise((resolve, reject) => {
-        var client = adb.createClient({ host: '127.0.0.1', port: 5037 });
+        const client = adb.createClient({ host: '127.0.0.1', port: 5037 });
         client.trackDevices()
             .then(function (tracker) {
                 tracker.on('add', function (device) {
                     console.log('Device %s was plugged in', device.id);
-                    resolve(device.id); // Resolve with device.id when a device is added
+                    resolve('Device %s was plugged in', device.id); // Resolve with status and device ID
                 });
                 tracker.on('remove', function (device) {
                     console.log('Device %s was unplugged', device.id);
-                    // You might want to handle removal here or resolve with some indicator if needed
+                    resolve('Device %s was unplugged', device.id); // Resolve with status and device ID
                 });
                 tracker.on('end', function () {
                     console.log('Tracking stopped');
@@ -117,20 +116,6 @@ ipcMain.handle('connect', async (event, command) => {
         console.log('hello from tracking');
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   ipcMain.handle('command', async (event, serializedCommand) => {
