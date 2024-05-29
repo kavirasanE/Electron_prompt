@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Online } from '../components/Sidebar'
-import { Tabs } from 'flowbite-react'
+import { Tabs, Table } from 'flowbite-react'
 import CommandTable from '../components/commands/CommandTable'
 import OutputLogs from '../components/commands/OutputLogs'
 
 const Commands = () => {
   const data = [
     {
-      GeneralCommands: [
+      id: 0,
+      title: 'GeneralCommands',
+      commands: [
         {
           command: 'dumpsys activity service WhadService',
           description: 'Dumpsys command for CSM/FTV devices to know ASD, ASD score, TSS.'
@@ -97,44 +99,82 @@ const Commands = () => {
           command: 'logcat |grep -i "using DemuxedDataSource"',
           description: 'To check demux (Tunein HLS).'
         }
-      ],
-      FTVCommands: [
+      ]
+    },
+    {
+      id: 1,
+      title: 'FTVCommands',
+      commands: [
         {
           command: 'exampleFTVCommand',
           description: 'This is an example command for FTV operations.'
         }
-      ],
-      'Spotify Commands': [
+      ]
+    },
+    {
+      id: 2,
+      title: 'Spotify Commands',
+      commands: [
         {
           command: 'exampleSpotifyCommand',
           description: 'This is an example command for Spotify operations.'
         }
-      ],
-      'Tuple Devices Commands': [
+      ]
+    },
+    {
+      id: 3,
+      title: 'Tuple Devices Commands',
+      commands: [
         {
           command: 'exampleTupleDeviceCommand',
           description: 'This is an example command for Tuple device operations.'
         }
-      ],
-      'Hypnos Galileo Commands': [
+      ]
+    },
+    {
+      id: 4,
+      title: 'Hypnos Galileo Commands',
+      commands: [
         {
           command: 'exampleHypnosGalileoCommand',
           description: 'This is an example command for Hypnos and Galileo operations.'
         }
-      ],
-      LowPowerMode: [
+      ]
+    },
+    {
+      id: 5,
+      title: 'Hypnos Galileo Commands',
+      commands: [
+        {
+          command: 'exampleHypnosGalileoCommand',
+          description: 'This is an example command for Hypnos and Galileo operations.'
+        }
+      ]
+    },
+    {
+      id: 6,
+      title: 'LowPowerMode',
+      commands: [
         {
           command: 'exampleLowPowerModeCommand',
           description: 'This is an example command for Low Power Mode operations.'
         }
-      ],
-      MP_SM_Commands: [
+      ]
+    },
+    {
+      id: 7,
+      title: 'MP_SM_Commands',
+      commands: [
         {
           command: 'exampleMP_SM_Command',
           description: 'This is an example command for MP/SMC operations.'
         }
-      ],
-      Longevity: [
+      ]
+    },
+    {
+      id: 8,
+      title: 'Longevity',
+      commands: [
         {
           command: 'exampleLongevityCommand',
           description: 'This is an example command for Longevity operations.'
@@ -143,42 +183,66 @@ const Commands = () => {
     }
   ]
 
-  const [section, setSection] = useState([])
+  const tabsRef = useRef(null)
+  // console.log(tabsRef)
+  const [activeTab, setActiveTab] = useState(0)
+  // console.log('active', activeTab)
+
+  const [section, setSection] = useState(data)
+  const [activeSection, setActiveSection] = useState('GeneralCommands')
+  const [filteredCommands, setfilterCommands] = useState([])
+
+  // useEffect(() => {
+  //   const commandSections = Object.keys(data[1])
+  //   setSection(commandSections)
+  // }, [])
+
+  const filterCommands = (id) => {
+    const filter = data.filter((item) => item.id == id)
+    setfilterCommands(filter[0].commands)
+  }
+  console.log(filteredCommands)
 
   useEffect(() => {
-    const commandSections = Object.keys(data[0])
-    setSection(commandSections)
-  }, [])
-
-  // console.log(Object.keys(data[0]))
-
-  const handleCommands = (e) => {
-    console.log(e)
-  }
+    console.log('act', activeTab)
+    filterCommands(activeTab)
+  }, [activeTab])
 
   return (
-    <div className="bg-white text-black w-screen h-screen">
+    <>
       <Online />
-      <div className="px-2">
-        <Tabs
-          aria-label="Tabs with underline"
-          className="w-screen grid grid-cols-6"
-          style="underline"
-        >
-          {section.map((sec, index) => (
-            <Tabs.Item title={sec} key={index} />
-          ))}
-        </Tabs>
-      </div>
-      <div className="flex flex-row justify-between gap-4">
-        <div className="w-1/2">
-          <CommandTable />
+      <div className="bg-white text-black ">
+        <div className="px-2">
+          <Tabs
+            className="w-screen grid grid-cols-6 "
+            ref={tabsRef}
+            onActiveTabChange={(tab) => setActiveTab(tab)}
+          >
+            {data.map((sec, index) => (
+              <Tabs.Item title={sec.title} key={index} active={activeSection === sec.id} />
+            ))}
+          </Tabs>
         </div>
-        <div className="w-1/2 bg-black h-screen rounded-md">
-          <OutputLogs />
+        <div className="flex flex-row justify-between gap-4 ">
+          <div className="w-1/2 ">
+            <Table>
+              <Table.Head>
+                <Table.HeadCell className="bg-red-400 font-bold subpixel-antialiased text-black text-lg text-center">
+                  Commands
+                </Table.HeadCell>
+              </Table.Head>
+            </Table>
+
+            {filteredCommands.map((item, index) => (
+              <CommandTable item={item} index={index} key={index} />
+            ))}
+          </div>
+          <div className="w-1/2 bg-black h-screen rounded-md">
+            <OutputLogs />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
