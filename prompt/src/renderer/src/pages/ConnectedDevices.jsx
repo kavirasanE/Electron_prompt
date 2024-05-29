@@ -29,8 +29,9 @@ const ConnectedDevices = () => {
   }, []); // Empty dependency array to run effect only once
 
   return (
+    <>
+    <Online />
     <div className="bg-white w-screen text-black h-screen p-5">
-      <Online />
       <div>
         <p>Connected Devices :</p>
         {connectedDevices.map((device, index) => (
@@ -38,6 +39,7 @@ const ConnectedDevices = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

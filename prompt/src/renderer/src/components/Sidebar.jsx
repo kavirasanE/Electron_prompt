@@ -22,7 +22,7 @@ export function Online() {
       <div className="flex items-center justify-between p-2 w-full px-10 ">
         <RxHamburgerMenu
           size={40}
-          className=" rounded-lg border border-gray-100 p-1.5 shadow-lg shadow-black/50 cursor-pointer"
+          className="rounded-lg border border-gray-100 p-1.5 shadow-lg shadow-black/50 cursor-pointer"
           onClick={() => setIsOpen(true)}
         />
 

@@ -209,10 +209,10 @@ const Commands = () => {
   }, [activeTab])
 
   return (
-    <>
-      <Online />
-      <div className="bg-white text-black ">
-        <div className="px-2">
+    <div className='h-screen overflow-auto'>
+    <Online/>
+      <div className="bg-white  text-black ">
+        <div>
           <Tabs
             className="w-screen grid grid-cols-6 "
             ref={tabsRef}
@@ -223,9 +223,9 @@ const Commands = () => {
             ))}
           </Tabs>
         </div>
-        <div className="flex flex-row justify-between gap-4 ">
-          <div className="w-1/2 ">
-            <Table>
+        <div className="flex flex-row justify-between p-2 gap-2 h-screen">
+          <div className="w-1/2 h-screen overflow-y-auto">
+            <Table >
               <Table.Head>
                 <Table.HeadCell className="bg-red-400 font-bold subpixel-antialiased text-black text-lg text-center">
                   Commands
@@ -237,12 +237,12 @@ const Commands = () => {
               <CommandTable item={item} index={index} key={index} />
             ))}
           </div>
-          <div className="w-1/2 bg-black h-screen rounded-md">
+          <div className="w-1/2 h-screen bg-black ">
             <OutputLogs />
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
