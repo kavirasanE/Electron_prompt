@@ -15,7 +15,6 @@ const Open = () => {
       console.log('Response Data:', res)
       setData(res)
     })
-    // console.log(window)
   }
   return (
     <>
