@@ -68,66 +68,78 @@ app.whenReady().then(() => {
     return a
   })
 
-  ipcMain.handle('command', async (event, serializedCommand) => {
-    const { command } = JSON.parse(serializedCommand)
-    let res = ''
-
-    // Assuming `output` is a function that accepts a command and a callback
-    // If `output` is synchronous or already uses a callback pattern,
-    // wrap it in a Promise to use `await` properly.
-    const outputPromise = new Promise((resolve, reject) => {
-      output(command, (commands) => {
-        res += commands
-        resolve(res)
-      })
-    })
-
-    try {
-      const result = await outputPromise
-      console.log(result)
-      return JSON.stringify(result)
-    } catch (error) {
-      console.error('Error executing command:', error)
-      return JSON.stringify({ error: error.message })
-    }
-  })
-
   // ipcMain.handle('command', async (event, serializedCommand) => {
-  //   const wss = new WebSocket.Server({ port: 8080 })
+  //   const { command } = JSON.parse(serializedCommand)
+  //   let res = ''
 
-  //   wss.on('connection', (ws) => {
-  //     console.log('Client connected')
-
-  //     ws.on('message', (message) => {
-  //       const { command } = JSON.parse(message)
-  //       let res = ''
-
-  //       // Assuming `output` is a function that accepts a command and a callback
-  //       const outputPromise = new Promise((resolve, reject) => {
-  //         output(command, (commands) => {
-  //           res += commands
-  //           resolve(res)
-  //         })
-  //       })
-
-  //       outputPromise
-  //         .then((result) => {
-  //           ws.send(JSON.stringify(result))
-  //         })
-  //         .catch((error) => {
-  //           console.error('Error executing command:', error)
-  //           ws.send(JSON.stringify({ error: error.message }))
-  //         })
+  //   // Assuming `output` is a function that accepts a command and a callback
+  //   // If `output` is synchronous or already uses a callback pattern,
+  //   // wrap it in a Promise to use `await` properly.
+  //   const outputPromise = new Promise((resolve, reject) => {
+  //     output(command, (commands) => {
+  //       res += commands
+  //       resolve(res)
   //     })
-
-  //     ws.on('close', () => {
-  //       console.log('Client disconnected')
-  //     })
-
-  //     // Example: Sending a message to the client
-  //     ws.send('Hello from the WebSocket server')
   //   })
+
+  //   try {
+  //     const result = await outputPromise
+  //     console.log(result)
+  //     return JSON.stringify(result)
+  //   } catch (error) {
+  //     console.error('Error executing command:', error)
+  //     return JSON.stringify({ error: error.message })
+  //   }
   // })
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ipcMain.handle('command', async (event, serializedCommand) => {
+    const wss = new WebSocket.Server({ port: 4000 })
+
+    wss.on('connection', (ws) => {
+      console.log('Client connected')
+
+      ws.on('message', (message) => {
+        const { command } = JSON.parse(message)
+        let res = ''
+
+        // Assuming `output` is a function that accepts a command and a callback
+        const outputPromise = new Promise((resolve, reject) => {
+          output(command, (commands) => {
+            res += commands
+            resolve(res)
+          })
+        })
+
+        outputPromise
+          .then((result) => {
+            ws.send(JSON.stringify(result))
+          })
+          .catch((error) => {
+            console.error('Error executing command:', error)
+            ws.send(JSON.stringify({ error: error.message }))
+          })
+      })
+
+      ws.on('close', () => {
+        console.log('Client disconnected')
+      })
+
+      // Example: Sending a message to the client
+      ws.send('Hello from the WebSocket server')
+    })
+  })
 
 
 
