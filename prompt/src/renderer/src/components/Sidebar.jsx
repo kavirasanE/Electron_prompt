@@ -53,6 +53,7 @@ export function Online() {
                   </Sidebar.ItemGroup>
                   <Sidebar.ItemGroup>
                     <Sidebar.Item href="/connectdevice">Connected Devices</Sidebar.Item>
+                    <Sidebar.Item href="/commands">Log Commands</Sidebar.Item>
                     {/* <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>
                       Components
                     </Sidebar.Item>
