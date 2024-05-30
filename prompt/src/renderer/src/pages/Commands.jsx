@@ -211,10 +211,10 @@ const Commands = () => {
   return (
     <div className='h-screen overflow-auto'>
     <Online/>
-      <div className="bg-white  text-black ">
+      <div className="bg-white text-black ">
         <div>
           <Tabs
-            className="w-screen grid grid-cols-6 "
+            className="w-screen grid grid-cols-6  "
             ref={tabsRef}
             onActiveTabChange={(tab) => setActiveTab(tab)}
           >

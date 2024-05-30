@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Takelogs from './pages/Takelogs'
 import ConnectedDevices from './pages/ConnectedDevices'
 import Commands from './pages/Commands'
+
 // import Socket from './Socket'
 // import Logs from './pages/Logs'
 function App() {
