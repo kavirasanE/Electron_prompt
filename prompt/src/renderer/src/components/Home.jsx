@@ -1,13 +1,16 @@
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Online } from './Sidebar'
+import copy from 'copy-to-clipboard'
+import toast from "react-hot-toast"
+
 
 export default function Home() {
   const [command, setCommand] = useState('')
   const [data, setData] = useState('no data displayed')
+  const textRef = useRef('')
 
-  
   const handleSend = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -24,6 +27,15 @@ export default function Home() {
         setData(err)
         console.log(err)
       })
+  }
+
+  const CopytoClipboard = () => {
+    let copyText = textRef.current.value
+    let isCopy = copy(copyText)
+    if (isCopy) {
+      toast.success("Copied to Clipboard")
+    }
+    console.log(copyText)
   }
 
   return (
@@ -53,8 +65,16 @@ export default function Home() {
           </Button>
         </form>
       </div>
-      <div className="border border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
-        <pre className="text-white/80">{data}</pre>
+
+      <div className=" border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
+      <Button onClick={CopytoClipboard} >Copy to ClipBoard</Button>
+        <input
+          className="text-white/80 bg-black/10 outline-none border-none"
+          disabled
+          type="text"
+          value={data}
+          ref={textRef}
+        />
       </div>
     </div>
   )

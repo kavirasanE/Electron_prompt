@@ -19,16 +19,18 @@ export function Online() {
 
   return (
     <>
-      <div className="flex items-center">
+      <div className="flex items-center justify-between p-2 w-full px-10 ">
         <RxHamburgerMenu
           size={40}
-          className="text-black rounded-full border border-gray-400 p-1.5 shadow-lg shadow-black/50 cursor-pointer"
+          className="rounded-lg border border-gray-100 p-1.5 shadow-lg shadow-black/50 cursor-pointer"
           onClick={() => setIsOpen(true)}
         />
-        {/* <Button >Show navigation</Button> */}
+
+       <p className='font-bold text-xl'>Beta Version</p>
+       <p></p>
       </div>
       <Drawer open={isOpen} onClose={handleClose}>
-        <Drawer.Header title="MENU" titleIcon={() => <></>} />
+        <Drawer.Header title="PromptClickz" titleIcon={() => <></>} />
         <Drawer.Items>
           <Sidebar
             aria-label="Sidebar with multi-level dropdown example"
@@ -53,6 +55,7 @@ export function Online() {
                   </Sidebar.ItemGroup>
                   <Sidebar.ItemGroup>
                     <Sidebar.Item href="/connectdevice">Connected Devices</Sidebar.Item>
+                    <Sidebar.Item href="/commands">Log Commands</Sidebar.Item>
                     {/* <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>
                       Components
                     </Sidebar.Item>

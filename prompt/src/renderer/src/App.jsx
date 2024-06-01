@@ -4,20 +4,17 @@ import Home from './components/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Takelogs from './pages/Takelogs'
 import ConnectedDevices from './pages/ConnectedDevices'
-// import Socket from './Socket'
-// import Logs from './pages/Logs'
-
+import Commands from './pages/Commands'
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Open />} />
-          {/* <Route path="/" element={<Socket />} /> */}
           <Route path="/Home" element={<Home />} />
           <Route path="/logs" element={<Takelogs />} />
           <Route path="/connectdevice" element={<ConnectedDevices />} />
-          {/* <Route path='/demo' element={<Logs />}/> */}
+          <Route path="/commands" element={<Commands />} />
         </Routes>
       </BrowserRouter>
     </>
