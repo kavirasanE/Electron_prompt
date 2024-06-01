@@ -3,8 +3,7 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Online } from './Sidebar'
 import copy from 'copy-to-clipboard'
-import toast from "react-hot-toast"
-
+import toast from 'react-hot-toast'
 
 export default function Home() {
   const [command, setCommand] = useState('')
@@ -33,13 +32,13 @@ export default function Home() {
     let copyText = textRef.current.value
     let isCopy = copy(copyText)
     if (isCopy) {
-      toast.success("Copied to Clipboard")
+      toast.success('Copied to Clipboard')
     }
     console.log(copyText)
   }
 
   return (
-    <div className="bg-white w-screen h-screen p-5">
+    <div className="p-5 bg-white">
       <div className="flex justify-between ">
         <Online />
         <Link to="/" className="p-2 border-2 rounded-lg text-white bg-black/80">
@@ -67,14 +66,16 @@ export default function Home() {
       </div>
 
       <div className=" border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
-      <Button onClick={CopytoClipboard} >Copy to ClipBoard</Button>
-        <input
+        <Button onClick={CopytoClipboard}>Copy to ClipBoard</Button>
+        {/* <input
           className="text-white/80 bg-black/10 outline-none border-none"
           disabled
           type="text"
           value={data}
           ref={textRef}
-        />
+        /> */}
+        <pre>{data}</pre>
+       
       </div>
     </div>
   )

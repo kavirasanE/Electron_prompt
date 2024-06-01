@@ -220,7 +220,7 @@ const Commands = () => {
           <div className="w-1/2 h-screen overflow-y-auto">
             <Table>
               <Table.Head>
-                <Table.HeadCell className="bg-red-400 font-bold subpixel-antialiased text-black text-lg text-center">
+                <Table.HeadCell className="bg-blue-800 text-white font-bold subpixel-antialiased  text-lg text-center">
                   Commands
                 </Table.HeadCell>
               </Table.Head>

@@ -1,43 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { Online } from '../components/Sidebar';
+import React, { useEffect, useState } from 'react'
+import { Online } from '../components/Sidebar'
+import DeviceAcordian from '../components/ConnectedDevices/DeviceAcordian'
 
 const ConnectedDevices = () => {
-  const [connectedDevices, setConnectedDevices] = useState([]);
+  let status = []
 
-  useEffect(() => {
-   
-    window.electron.ipcRenderer.invoke('connect').then((result) => {
-     
-      if (result.status === 'plugged') {
-        
-        if (!connectedDevices.includes(result.deviceId)) {
-          
-          setConnectedDevices((prevDevices) => [...prevDevices, result.deviceId]);
-        }
-      } else if (result.status === 'unplugged') {
-        setConnectedDevices((prevDevices) =>
-          prevDevices.filter((deviceId) => deviceId !== result.deviceId)
-        );
+  let [deviceStatus, setDeviceStatus] = useState([])
+
+  const trackDevice = () => {
+    window.deviceConnect.connectedDevice((data, output) => {
+      if (data) {
+        status.push(data)
+        setDeviceStatus(true)
+        // if (data.status == 'plug' && !deviceStatus.some((item) => item.data.id === data.id)) {
+        //   setDeviceStatus((prev) => {
+        //     return [...prev, { data }]
+        //   })
+        //    console.log(deviceStatus)
+        // } else if (data.status == 'unplug') {
+        //   const filterData = deviceStatus.filter((item) => item.data.id !== data.id)
+        //   setDeviceStatus(filterData)
+        // }
+        // // status.push(data)
+        // // console.log(status)
+      } else {
+        console.log(output)
       }
-    });
-
-    return () => {
-    };
-  }, []); 
+    })
+  }
+  useEffect(() => {
+    trackDevice();
+    // setDeviceStatus(status);
+  },[status])
+  // console.log(status);  
 
   return (
-    <>
-    <Online />
-    <div className="bg-white w-screen text-black h-screen p-5">
-      <div>
-        <p>Connected Devices :</p>
-        {connectedDevices.map((device, index) => (
-          <p key={index}>{device}</p>
-        ))}
+    <div className="">
+      <Online />
+      <div className=" p-5">
+        <div>
+          <p className="font-bold text-2xl">Connected Devices :</p>
+        </div>
+        <div>
+          {/* {deviceStatus.map((device, index) => (
+              <div className='text-black'>
+            
+                <DeviceAcordian device={device} index={index} />
+              </div>
+            ))} */}
+            <DeviceAcordian/>
+        </div>
       </div>
     </div>
-    </>
-  );
-};
+  )
+}
 
-export default ConnectedDevices;
+export default ConnectedDevices
