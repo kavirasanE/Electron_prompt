@@ -4,11 +4,6 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import output from './output'
 import trackDevice from './trackDevice'
-// const WebSocket = require('ws');
-// import WebSocket from 'ws'
-// import path from 'path'
-// import cors from "cors";
-// const path = require('path');
 
 function createWindow() {
   // Create the browser window.
@@ -42,6 +37,8 @@ function createWindow() {
   }
 }
 
+
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -56,67 +53,40 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-
   ipcMain.on('ping', () => console.log('pong'))
 
-  // ipcMain.handle('connect', async (event, command) => {
-  //   var adb = require('adbkit')
-  //   var client = adb.createClient({ host: '127.0.0.1', port: 5037 })
-  //   client
-  //     .trackDevices()
-  //     .then(function (tracker) {
-  //       tracker.on('add', function (device) {
-  //         console.log('Device %s was plugged in', device.id)
-  //         return device.id
-  //       })
-  //       tracker.on('remove', function (device) {
-  //         console.log('Device %s was unplugged', device.id)
-  //         return device.id
-  //       })
-  //       tracker.on('end', function () {
-  //         console.log('Tracking stopped')
-  //       })
-  //     })
-  //     .catch(function (err) {
-  //       console.error('Something went wrong:', err.stack)
-  //     })
-  //   console.log('hello from tracking')
-  // })
-
-  // trackDevice()
   ipcMain.handle('adb', async (event, a) => {
     a = 'im here in react '
     return a
   })
 
-  const adb = require('adbkit');
+  const adb = require('adbkit')
 
-ipcMain.handle('connect', async (event, command) => {
+  ipcMain.handle('connect', async (event, command) => {
     return new Promise((resolve, reject) => {
-        const client = adb.createClient({ host: '127.0.0.1', port: 5037 });
-        client.trackDevices()
-            .then(function (tracker) {
-                tracker.on('add', function (device) {
-                    console.log('Device %s was plugged in', device.id);
-                    resolve('Device %s was plugged in', device.id); // Resolve with status and device ID
-                });
-                tracker.on('remove', function (device) {
-                    console.log('Device %s was unplugged', device.id);
-                    resolve('Device %s was unplugged', device.id); // Resolve with status and device ID
-                });
-                tracker.on('end', function () {
-                    console.log('Tracking stopped');
-                    // You might want to handle end of tracking here or resolve with some indicator if needed
-                });
-            })
-            .catch(function (err) {
-                console.error('Something went wrong:', err.stack);
-                reject(err); // Reject the promise if an error occurs
-            });
-        console.log('hello from tracking');
-    });
-});
-
+      const client = adb.createClient({ host: '127.0.0.1', port: 5037 })
+      client
+        .trackDevices()
+        .then(function (tracker) {
+          tracker.on('add', function (device) {
+            console.log('Device %s was plugged in', device.id)
+            resolve('Device %s was plugged in', device.id)
+          })
+          tracker.on('remove', function (device) {
+            console.log('Device %s was unplugged', device.id)
+            resolve('Device %s was unplugged', device.id)
+          })
+          tracker.on('end', function () {
+            console.log('Tracking stopped')
+          })
+        })
+        .catch(function (err) {
+          console.error('Something went wrong:', err.stack)
+          reject(err)
+        })
+      console.log('hello from tracking')
+    })
+  })
 
   ipcMain.handle('command', async (event, serializedCommand) => {
     const { command } = JSON.parse(serializedCommand)
@@ -137,42 +107,8 @@ ipcMain.handle('connect', async (event, command) => {
     }
   })
 
-  // ipcMain.handle('command', async (event, serializedCommand) => {
-  //   const wss = new WebSocket.Server({ port: 4000 })
 
-  //   wss.on('connection', (ws) => {
-  //     console.log('Client connected')
-
-  //     ws.on('message', (message) => {
-  //       const { command } = JSON.parse(message)
-  //       let res = ''
-
-  //       // Assuming `output` is a function that accepts a command and a callback
-  //       const outputPromise = new Promise((resolve, reject) => {
-  //         output(command, (commands) => {
-  //           res += commands
-  //           resolve(res)
-  //         })
-  //       })
-
-  //       outputPromise
-  //         .then((result) => {
-  //           ws.send(JSON.stringify(result))
-  //         })
-  //         .catch((error) => {
-  //           console.error('Error executing command:', error)
-  //           ws.send(JSON.stringify({ error: error.message }))
-  //         })
-  //     })
-
-  //     ws.on('close', () => {
-  //       console.log('Client disconnected')
-  //     })
-
-  //     // Example: Sending a message to the client
-  //     ws.send('Hello from the WebSocket server')
-  //   })
-  // })
+ 
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

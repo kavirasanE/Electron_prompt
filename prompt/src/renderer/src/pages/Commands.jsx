@@ -184,18 +184,11 @@ const Commands = () => {
   ]
 
   const tabsRef = useRef(null)
-  // console.log(tabsRef)
   const [activeTab, setActiveTab] = useState(0)
-  // console.log('active', activeTab)
 
   const [section, setSection] = useState(data)
   const [activeSection, setActiveSection] = useState('GeneralCommands')
   const [filteredCommands, setfilterCommands] = useState([])
-
-  // useEffect(() => {
-  //   const commandSections = Object.keys(data[1])
-  //   setSection(commandSections)
-  // }, [])
 
   const filterCommands = (id) => {
     const filter = data.filter((item) => item.id == id)
@@ -209,8 +202,8 @@ const Commands = () => {
   }, [activeTab])
 
   return (
-    <div className='h-screen overflow-auto'>
-    <Online/>
+    <div className="h-screen overflow-auto">
+      <Online />
       <div className="bg-white text-black ">
         <div>
           <Tabs
@@ -225,7 +218,7 @@ const Commands = () => {
         </div>
         <div className="flex flex-row justify-between p-2 gap-2 h-screen">
           <div className="w-1/2 h-screen overflow-y-auto">
-            <Table >
+            <Table>
               <Table.Head>
                 <Table.HeadCell className="bg-red-400 font-bold subpixel-antialiased text-black text-lg text-center">
                   Commands

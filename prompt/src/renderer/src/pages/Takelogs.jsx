@@ -5,6 +5,7 @@ import { Button, FileInput, Label } from 'flowbite-react'
 
 const Takelogs = () => {
   const [folder, setFolder] = useState()
+  console.log(window)
 
   const handleChange = (e) => {
     // console.log(e.target.files[0])
