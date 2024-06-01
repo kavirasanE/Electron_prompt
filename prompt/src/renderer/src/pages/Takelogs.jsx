@@ -5,7 +5,8 @@ import { Button, FileInput, Label } from 'flowbite-react'
 
 const Takelogs = () => {
   const [folder, setFolder] = useState()
-  console.log(window)
+  // console.log(window)
+  console.log(window.socket)
 
   const handleChange = (e) => {
     // console.log(e.target.files[0])
@@ -45,9 +46,7 @@ const Takelogs = () => {
         <input type="file" webkitdirectory="true" dir="true" onChange={handleChange} />
         <p className="text-black">{folder && folder}</p>
       </div>
-      <Button className="m-5" >
-        Connected Devices
-      </Button>
+      <Button className="m-5">Connected Devices</Button>
       <div className="border border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
         <pre className="text-white/80"></pre>
       </div>
