@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import output from './output'
 import trackDevice from './trackDevice'
+import adbCommands from './adb/adb'
 
 function createWindow() {
   // Create the browser window.
@@ -51,7 +52,8 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-
+  trackDevice();
+  adbCommands();
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
