@@ -2,6 +2,7 @@ import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import trackDevice from '../main/trackDevice'
 import adbCommands from '../main/adb/adb'
+import listDevices from '../main/DeviceConnections/listDevices'
 // Custom APIs for renderer
 const api = {}
 const socket = {
@@ -11,10 +12,21 @@ const socket = {
     adbCommands(this.message, callback)
   }
 }
+
 const deviceConnect = {
-   connectedDevice: function (callback) {
-    trackDevice(callback);
-   }
+  message: 'getprop | grep build',
+  device: function (callback) {
+    adbCommands(this.message, callback)
+  },
+  connectedDevice: function (callback) {
+    trackDevice(callback)
+  }
+}
+
+const listDevice = {
+  deviceList: function (callback) {
+    listDevices(callback)
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
@@ -25,14 +37,16 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api),
-    contextBridge.exposeInMainWorld('socket', socket),
-    contextBridge.exposeInMainWorld('deviceConnect',deviceConnect)
+      contextBridge.exposeInMainWorld('socket', socket),
+      contextBridge.exposeInMainWorld('deviceConnect', deviceConnect),
+      contextBridge.exposeInMainWorld('listDevice', listDevice)
   } catch (error) {
     console.error(error)
   }
 } else {
-  window.electron = electronAPI,
-  window.api = api,
-  window.socket = socket,
-  window.deviceConnect = deviceConnect
+  ;(window.electron = electronAPI),
+    (window.api = api),
+    (window.socket = socket),
+    (window.deviceConnect = deviceConnect),
+    (window.listDevice = listDevice)
 }

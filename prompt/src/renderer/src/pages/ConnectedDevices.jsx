@@ -3,52 +3,73 @@ import { Online } from '../components/Sidebar'
 import DeviceAcordian from '../components/ConnectedDevices/DeviceAcordian'
 
 const ConnectedDevices = () => {
-  let status = []
+  const [devices, setDevices] = useState([])
+  const [data, setData] = useState([])
+  // console.log(window.deviceConnect)
+  const getBuildDetails = async (callback) => {
+    await window.deviceConnect.device((datas, output) => {
+      if (datas) {
+        console.log(datas)
+      } else {
+        const outputString = String(output)
+        setData(outputString)
+        let obj = outputString.split('\n')
+        let next = obj[0].split(' ')
+        console.log(next[1].toString())
+        // let last = next[1];
 
-  let [deviceStatus, setDeviceStatus] = useState([])
-
+        const buildDetails = {
+          build: next[1],
+          version: next[2]
+        }
+        if (callback) callback(buildDetails)
+      }
+    })
+  }
+  // getBuildDetails();
+  console.log(devices)
   const trackDevice = () => {
     window.deviceConnect.connectedDevice((data, output) => {
       if (data) {
-        status.push(data)
-        setDeviceStatus(true)
-        // if (data.status == 'plug' && !deviceStatus.some((item) => item.data.id === data.id)) {
-        //   setDeviceStatus((prev) => {
-        //     return [...prev, { data }]
-        //   })
-        //    console.log(deviceStatus)
-        // } else if (data.status == 'unplug') {
-        //   const filterData = deviceStatus.filter((item) => item.data.id !== data.id)
-        //   setDeviceStatus(filterData)
-        // }
-        // // status.push(data)
-        // // console.log(status)
+        setDevices((prevDevices) => {
+          if (data.status === 'plug') {
+            getBuildDetails((buildDetails) => {
+              if (buildDetails) {
+                const UpdatedData = { ...data, ...buildDetails }
+                if (!prevDevices.some((device) => device.id === data.id)) {
+                  setDevices([...prevDevices, UpdatedData])
+                }
+              }
+            })
+          } else if (data.status === 'unplug') {
+            return prevDevices.filter((device) => device.id !== data.id)
+          }
+          return prevDevices
+        })
       } else {
         console.log(output)
       }
     })
   }
+
   useEffect(() => {
-    trackDevice();
-    // setDeviceStatus(status);
-  },[status])
-  // console.log(status);  
+    trackDevice()
+  }, [])
 
   return (
     <div className="">
       <Online />
-      <div className=" p-5">
+      <div className="p-5">
         <div>
           <p className="font-bold text-2xl">Connected Devices :</p>
         </div>
         <div>
-          {/* {deviceStatus.map((device, index) => (
-              <div className='text-black'>
-            
-                <DeviceAcordian device={device} index={index} />
-              </div>
-            ))} */}
-            <DeviceAcordian/>
+          {devices.map((device, index) => (
+            <div key={device.id} className="">
+              <DeviceAcordian device={device} index={index} />
+              <p>{device.id}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

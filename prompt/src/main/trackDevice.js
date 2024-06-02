@@ -6,16 +6,14 @@ function trackDevice(callback) {
     .trackDevices()
     .then(function (tracker) {
       tracker.on('add', function (device) {
+        device.status ='plug'
         console.log('Device  was plugged in', device)
-           const result = device;
-           result.status = "plug"
-        if (callback) callback(device);
+        if (callback) callback(device)
       })
       tracker.on('remove', function (device) {
+        device.status ='unplug',
         console.log('Device  was unplugged', device)
-         const result = device;
-         result.status ="unplug"
-        // if (callback) callback(result)
+        if (callback) callback(device)
       })
       tracker.on('end', function () {
         console.log('Tracking stopped')

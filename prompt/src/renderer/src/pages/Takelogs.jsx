@@ -12,7 +12,7 @@ const Takelogs = () => {
       console.log(err)
     } else {
       setDisplay(output)
-      console.log(display)
+      // console.log(display)
     }
   })
 

@@ -5,6 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import output from './output'
 import trackDevice from './trackDevice'
 import adbCommands from './adb/adb'
+import listDevices from './DeviceConnections/listDevices'
 
 function createWindow() {
   // Create the browser window.
@@ -112,6 +113,7 @@ app.whenReady().then(() => {
     }
   })
 
+  listDevices();
 
  
 
