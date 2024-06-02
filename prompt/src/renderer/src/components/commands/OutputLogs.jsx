@@ -1,11 +1,13 @@
 import React from 'react'
 
-const OutputLogs = () => {
+const OutputLogs = ({ output }) => {
   return (
-    <div className='text-white p-2'>
-       <pre>
-        output
-       </pre>
+    <div className="text-white">
+      <p className="bg-white/20 p-2  font-medium subpixel-antialiased flex justify-between items-center">
+      <span>Connected Device:</span>
+      <span>DSN:</span>
+       </p>
+      <pre>{output}</pre>
     </div>
   )
 }

@@ -1,5 +1,3 @@
-import { jsx } from 'react/jsx-runtime'
-
 var Promise = require('bluebird')
 var adb = require('adbkit')
 var client = adb.createClient({ host: '127.0.0.1', port: 5037 })

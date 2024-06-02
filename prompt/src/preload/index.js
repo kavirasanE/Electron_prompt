@@ -1,7 +1,7 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import trackDevice from '../main/trackDevice'
-import adbCommands from '../main/adb/adb'
+import adbCommands from '../main/adb/adbCommands'
 import listDevices from '../main/DeviceConnections/listDevices'
 // Custom APIs for renderer
 const api = {}
@@ -12,7 +12,6 @@ const socket = {
     adbCommands(this.message, callback)
   }
 }
-
 const deviceConnect = {
   message: 'getprop | grep build',
   device: function (callback) {

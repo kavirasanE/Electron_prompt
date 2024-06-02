@@ -4,8 +4,10 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import output from './output'
 import trackDevice from './trackDevice'
-import adbCommands from './adb/adb'
+import adbCommands from './adb/adbCommands'
 import listDevices from './DeviceConnections/listDevices'
+import { jsx } from 'react/jsx-runtime'
+import adbShellCommands from './adb/adbShellCommands'
 
 function createWindow() {
   // Create the browser window.
@@ -113,9 +115,22 @@ app.whenReady().then(() => {
     }
   })
 
-  listDevices();
-
- 
+    ipcMain.handle('shellCommand' ,async (event,serializedCommand) => {
+      let res = '' 
+      const output = new Promise((resolve,reject) => {
+           adbShellCommands(serializedCommand, (callback) => {
+            res += callback,
+            resolve(res)
+           })
+      })
+      try {
+        const result = await output 
+        console.log(result,"result from ipc handle");
+        return JSON.stringify(result)
+      }catch(error) {
+        console.log(err, "Error from ADB shell Command")
+      }
+    })
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

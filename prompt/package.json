@@ -23,6 +23,7 @@
         "@electron-toolkit/utils": "^3.0.0",
         "@electron/remote": "^2.1.2",
         "adbkit": "^2.11.1",
+        "adbkit-logcat": "^2.0.1",
         "bluebird": "^3.7.2",
         "concurrently": "^8.2.2",
         "copy-to-clipboard": "^3.3.3",
