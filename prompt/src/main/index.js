@@ -4,6 +4,9 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import output from './output'
 import trackDevice from './trackDevice'
+import adbCommands from './adb/adbCommands'
+import listDevices from './DeviceConnections/listDevices'
+import adbShellCommands from './adb/adbShellCommands'
 
 function createWindow() {
   // Create the browser window.
@@ -38,20 +41,25 @@ function createWindow() {
 }
 
 
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
 app.whenReady().then(() => {
+
   // Set app user model id for windows
+
   electronApp.setAppUserModelId('com.electron')
+
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
+
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-
+  trackDevice();
+  adbCommands();
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
@@ -61,7 +69,6 @@ app.whenReady().then(() => {
   })
 
   const adb = require('adbkit')
-
   ipcMain.handle('connect', async (event, command) => {
     return new Promise((resolve, reject) => {
       const client = adb.createClient({ host: '127.0.0.1', port: 5037 })
@@ -107,8 +114,22 @@ app.whenReady().then(() => {
     }
   })
 
-
- 
+    ipcMain.handle('shellCommand' ,async (event,serializedCommand) => {
+      let res = '' 
+      const output = new Promise((resolve,reject) => {
+           adbShellCommands(serializedCommand, (callback) => {
+            res += callback,
+            resolve(res)
+           })
+      })
+      try {
+        const result = await output 
+        console.log(result,"result from ipc handle");
+        return JSON.stringify(result)
+      }catch(error) {
+        console.log(err, "Error from ADB shell Command")
+      }
+    })
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

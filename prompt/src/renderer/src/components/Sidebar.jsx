@@ -19,18 +19,17 @@ export function Online() {
 
   return (
     <>
-      <div className="flex items-center justify-between p-2 w-full px-10 ">
+      <div className="flex items-center justify-between w-full p-1 px-10 border">
         <RxHamburgerMenu
           size={40}
-          className="rounded-lg border border-gray-100 p-1.5 shadow-lg shadow-black/50 cursor-pointer"
+          className="rounded-lg border border-gray-100 p-1.5 shadow-lg shadow-black/50 text-black cursor-pointer"
           onClick={() => setIsOpen(true)}
         />
-
-       <p className='font-bold text-xl'>Beta Version</p>
+       <p className='rounded-md font-bold text-xl bg-black p-2 text-white'>Prompt <span className='bg-amber-500 p-0.5 rounded-sm px-2 text-white'>hub</span></p>
        <p></p>
       </div>
       <Drawer open={isOpen} onClose={handleClose}>
-        <Drawer.Header title="PromptClickz" titleIcon={() => <></>} />
+        <Drawer.Header title="Prompt Hub" titleIcon={() => <></>} />
         <Drawer.Items>
           <Sidebar
             aria-label="Sidebar with multi-level dropdown example"

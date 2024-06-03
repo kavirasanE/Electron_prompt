@@ -1,43 +1,79 @@
-import React, { useEffect, useState } from 'react';
-import { Online } from '../components/Sidebar';
+import React, { useEffect, useState } from 'react'
+import { Online } from '../components/Sidebar'
+import DeviceAcordian from '../components/ConnectedDevices/DeviceAcordian'
 
 const ConnectedDevices = () => {
-  const [connectedDevices, setConnectedDevices] = useState([]);
+  const [devices, setDevices] = useState([])
+  const [data, setData] = useState([])
+  // console.log(window.deviceConnect)
+  const getBuildDetails = async (callback) => {
+    await window.deviceConnect.device((datas, output) => {
+      if (datas) {
+        console.log(datas)
+      } else {
+        const outputString = String(output)
+        setData(outputString)
+        let obj = outputString.split('\n')
+        let next = obj[0].split(' ')
+        console.log(next[1].toString())
+        // let last = next[1];
+
+        const buildDetails = {
+          build: next[1],
+          version: next[2]
+        }
+        if (callback) callback(buildDetails)
+      }
+    })
+  }
+  // getBuildDetails();
+  console.log(devices)
+  const trackDevice = () => {
+    window.deviceConnect.connectedDevice((data, output) => {
+      if (data) {
+        setDevices((prevDevices) => {
+          if (data.status === 'plug') {
+            getBuildDetails((buildDetails) => {
+              if (buildDetails) {
+                const UpdatedData = { ...data, ...buildDetails }
+                if (!prevDevices.some((device) => device.id === data.id)) {
+                  setDevices([...prevDevices, UpdatedData])
+                }
+              }
+            })
+          } else if (data.status === 'unplug') {
+            return prevDevices.filter((device) => device.id !== data.id)
+          }
+          return prevDevices
+        })
+      } else {
+        console.log(output)
+      }
+    })
+  }
 
   useEffect(() => {
-   
-    window.electron.ipcRenderer.invoke('connect').then((result) => {
-     
-      if (result.status === 'plugged') {
-        
-        if (!connectedDevices.includes(result.deviceId)) {
-          
-          setConnectedDevices((prevDevices) => [...prevDevices, result.deviceId]);
-        }
-      } else if (result.status === 'unplugged') {
-        setConnectedDevices((prevDevices) =>
-          prevDevices.filter((deviceId) => deviceId !== result.deviceId)
-        );
-      }
-    });
-
-    return () => {
-    };
-  }, []); 
+    trackDevice()
+  }, [])
 
   return (
-    <>
-    <Online />
-    <div className="bg-white w-screen text-black h-screen p-5">
-      <div>
-        <p>Connected Devices :</p>
-        {connectedDevices.map((device, index) => (
-          <p key={index}>{device}</p>
-        ))}
+    <div className="">
+      <Online />
+      <div className="p-5">
+        <div>
+          <p className="font-bold text-2xl">Connected Devices :</p>
+        </div>
+        <div>
+          {devices.map((device, index) => (
+            <div key={device.id} className="">
+              <DeviceAcordian device={device} index={index} />
+              <p>{device.id}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-    </>
-  );
-};
+  )
+}
 
-export default ConnectedDevices;
+export default ConnectedDevices

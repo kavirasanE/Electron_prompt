@@ -1,39 +1,19 @@
-@import '../assets/base.css';
 
- body{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-image: url('../assets/wavy-lines.svg');
-    background-size: cover;
-    user-select: none;
-  }
-
-code {
-  font-weight: 600;
-  padding: 3px 5px;
-  border-radius: 2px;
-  background-color: var(--color-background-mute);
-  font-family:
-    ui-monospace,
-    SFMono-Regular,
-    SF Mono,
-    Menlo,
-    Consolas,
-    Liberation Mono,
-    monospace;
-  font-size: 85%;
-}
-
-#root {
+ .background{
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  
-  justify-content: center;
   flex-direction: column;
-  margin-bottom: 80px;
-}
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: black;
+  background-image: url('../assets/wavy-lines.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  user-select: none;
+  }
 
 .logo {
   margin-bottom: 20px;
@@ -51,17 +31,10 @@ code {
   filter: drop-shadow(0 0 1.2em #1b46c6aa);
 } 
 
-.creator {
-  font-size: 14px;
-  line-height: 16px;
-  color: var(--ev-c-text-2);
-  font-weight: 600;
-  margin-bottom: 10px;
-}
 
 .text {
-  font-size: 28px;
-  color: var(--ev-c-text-1);
+  font-size: 40px;
+  color: aliceblue;
   font-weight: 700;
   line-height: 32px;
   text-align: center;
@@ -69,49 +42,13 @@ code {
   padding: 16px 0;
 }
 
-.tip {
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--ev-c-text-2);
-  font-weight: 600;
-}
 
 .react {
-  background: -webkit-linear-gradient(315deg, #087ea4 55%, #7c93ee);
+  background: -webkit-linear-gradient(315deg, #aaeeff 45%, #e3eb06);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 700;
-}
-
-.actions {
-  display: flex;
-  padding-top: 32px;
-  margin: -6px;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-.action {
-  flex-shrink: 0;
-  padding: 6px;
-}
-
-.action a {
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  border: 1px solid transparent;
-  text-align: center;
-  font-weight: 600;
-  white-space: nowrap;
-  border-radius: 20px;
-  padding: 0 20px;
-  line-height: 38px;
-  font-size: 14px;
-  border-color: var(--ev-button-alt-border);
-  color: var(--ev-button-alt-text);
-  background-color: var(--ev-button-alt-bg);
 }
 
 .action a:hover {
@@ -130,7 +67,6 @@ code {
   overflow: hidden;
   align-items: center;
   border-radius: 22px;
-  background-color: #202127;
   backdrop-filter: blur(24px);
 }
 
@@ -164,4 +100,27 @@ code {
   .actions {
     display: none;
   }
+}
+
+/* Total scrollbar width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Background of the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Scrollbar handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 5px;
 }

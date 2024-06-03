@@ -11,6 +11,14 @@ const Commands = () => {
       title: 'GeneralCommands',
       commands: [
         {
+          command: 'adb',
+          description: 'testing'
+        },
+        {
+          command: 'dumpsys',
+          description: 'testing'
+        },
+        {
           command: 'dumpsys activity service WhadService',
           description: 'Dumpsys command for CSM/FTV devices to know ASD, ASD score, TSS.'
         },
@@ -92,7 +100,7 @@ const Commands = () => {
           description: 'For Running logs.'
         },
         {
-          command: 'Getprop | grep build',
+          command: 'getprop | grep build',
           description: 'To check Device build details.'
         },
         {
@@ -189,6 +197,7 @@ const Commands = () => {
   const [section, setSection] = useState(data)
   const [activeSection, setActiveSection] = useState('GeneralCommands')
   const [filteredCommands, setfilterCommands] = useState([])
+  const [output, setOutput] = useState()
 
   const filterCommands = (id) => {
     const filter = data.filter((item) => item.id == id)
@@ -201,13 +210,20 @@ const Commands = () => {
     filterCommands(activeTab)
   }, [activeTab])
 
+  // console.log(callback);
+
+  const handleOutput = (output) => {
+    console.log(output, 'from parent ready add in state')
+    setOutput(output)
+  }
+
   return (
-    <div className="h-screen overflow-auto">
+    <div className="h-screen">
       <Online />
-      <div className="bg-white text-black ">
-        <div>
+      <div className="bg-white text-black">
+        <div className='mx-3'>
           <Tabs
-            className="w-screen grid grid-cols-6  "
+            className="flex px-2 items-center  justify-start"
             ref={tabsRef}
             onActiveTabChange={(tab) => setActiveTab(tab)}
           >
@@ -216,22 +232,22 @@ const Commands = () => {
             ))}
           </Tabs>
         </div>
-        <div className="flex flex-row justify-between p-2 gap-2 h-screen">
+        <div className="flex flex-row justify-between px-2  gap-2 h-screen">
           <div className="w-1/2 h-screen overflow-y-auto">
             <Table>
               <Table.Head>
-                <Table.HeadCell className="bg-red-400 font-bold subpixel-antialiased text-black text-lg text-center">
+                <Table.HeadCell className="bg-blue-800 text-white font-bold subpixel-antialiased  text-lg text-center">
                   Commands
                 </Table.HeadCell>
               </Table.Head>
             </Table>
 
             {filteredCommands.map((item, index) => (
-              <CommandTable item={item} index={index} key={index} />
+              <CommandTable item={item} key={index} callback={handleOutput} />
             ))}
           </div>
-          <div className="w-1/2 h-screen bg-black ">
-            <OutputLogs />
+          <div className="w-full h-screen rounded-t-xl bg-black overflow-auto ">
+            <OutputLogs output={output} />
           </div>
         </div>
       </div>
