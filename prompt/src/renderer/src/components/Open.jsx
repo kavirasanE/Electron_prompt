@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import '../assets/main.css'
 import electronLogo from '../assets/electron.svg'
 import './open.css'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button } from 'flowbite-react'
 const Open = () => {
   const [data, setData] = useState()
@@ -24,9 +24,9 @@ const Open = () => {
         Welcome to <span className="react ">PromptHUB</span>
       </div>
       <div className="button">
-        <Button href="/connectdevice" className="bg-blue-900  px-20 m-10">
+        <Link to="/connectdevice" className="bg-blue-900 p-3 z-10 rounded-xl text-white  px-20 m-10">
           <span className="text-xl font-medium subpixel-antialiased"> Get Started</span>
-        </Button>
+        </Link>
       </div>
       {/* <div className="action">
           <a target="_blank" rel="noreferrer" onClick={ipcHandle}>

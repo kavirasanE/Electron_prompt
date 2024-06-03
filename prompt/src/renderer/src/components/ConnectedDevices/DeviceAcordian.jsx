@@ -1,6 +1,6 @@
 import React from 'react'
 import { Accordion, Button } from 'flowbite-react'
-
+import { Link } from 'react-router-dom'
 const DeviceAcordian = ({ device, index }) => {
   console.log(device, 'output from accordian')
   return (
@@ -13,7 +13,7 @@ const DeviceAcordian = ({ device, index }) => {
                 Device Name: <span>{device.id}</span>
               </p>
               <p>
-                DSN: <span>{device.type}  </span>
+                DSN: <span>{device.type} </span>
               </p>
             </div>
           </Accordion.Title>
@@ -27,11 +27,11 @@ const DeviceAcordian = ({ device, index }) => {
               </div>
               <div className="flex flex-row justify-between items-center">
                 <div className="flex flex-row justify-start items-center gap-10 p-5">
-                  <Button color="dark" href="/logs">
-                    Take Logs
+                  <Button color="dark">
+                    <Link to="/logs">Take Logs</Link>
                   </Button>
-                  <Button color="dark" href="/commands">
-                    Check Commands
+                  <Button color="dark">
+                    <Link to="/commands"> Check Commands</Link>
                   </Button>
                 </div>
                 <p>Build Variant:</p>
