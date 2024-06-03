@@ -6,7 +6,6 @@ import output from './output'
 import trackDevice from './trackDevice'
 import adbCommands from './adb/adbCommands'
 import listDevices from './DeviceConnections/listDevices'
-import { jsx } from 'react/jsx-runtime'
 import adbShellCommands from './adb/adbShellCommands'
 
 function createWindow() {

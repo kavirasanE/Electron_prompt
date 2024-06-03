@@ -3,7 +3,6 @@ var adb = require('adbkit')
 var client = adb.createClient({ host: '127.0.0.1', port: 5037 })
 
 function adbCommands(message, callback) {
-  const { from } = Buffer
   client
     .listDevices()
     .then(function (devices) {
@@ -22,9 +21,9 @@ function adbCommands(message, callback) {
               // console.log(output.ro.bootimage.build.date);
 
               // console.log('[%s] %s', device.id, output.toString().trim())
-              const result = from(output).toString().trim()
+              const result = Buffer.from(output).toString().trim()
 
-              if (callback) callback(null,result)
+              if (callback) callback(null, result)
             })
         )
       })
