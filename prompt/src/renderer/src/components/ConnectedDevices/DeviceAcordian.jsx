@@ -10,10 +10,10 @@ const DeviceAcordian = ({ device, index }) => {
           <Accordion.Title className="bg-blue-800 text-white hover:bg-blue-800 ">
             <div className="w-[600px] flex flex-row items-center justify-between ">
               <p>
-                Device Name: <span>{device.id}</span>
+                Device Name: <span>{device.type}</span>
               </p>
               <p>
-                DSN: <span>{device.type} </span>
+                DSN: <span>{device.id} </span>
               </p>
             </div>
           </Accordion.Title>

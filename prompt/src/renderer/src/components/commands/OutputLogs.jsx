@@ -7,7 +7,7 @@ const OutputLogs = ({ output }) => {
       <span>Connected Device:</span>
       <span>DSN:</span>
        </p>
-      <pre>{output}</pre>
+      <pre className='p-5 break-all text-wrap'>{output}</pre>
     </div>
   )
 }

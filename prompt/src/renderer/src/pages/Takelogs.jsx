@@ -2,10 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { Online } from '../components/Sidebar'
 import { Link } from 'react-router-dom'
 import { Button, Label } from 'flowbite-react'
+import {encode, decode} from "messagepack";
 
 const Takelogs = () => {
   const [folder, setFolder] = useState('')
   const [display, setDisplay] = useState('')
+
+ 
+  // const bin1 = encode({foo: 7, bar: "seven"});
+  // console.log("encdeobj",bin1);
+  // const obj = decode(bin1);
+  // console.log("decode obj",obj);
+   
+  // const bin2 = encode("foobar");
+  // console.log("encode value",bin2);
+  // const str = decode(bin2);
+  // console.log("decode string",str);
+
+
+
+
 
   window.socket.device((err, output) => {
     if (err) {
@@ -28,21 +44,32 @@ const Takelogs = () => {
       console.log(res)
     }
   }
-
+  const handleLogs = () => {
+    console.log('dumpsys')
+    setDisplay('dumpsys')
+    let logcatCommand ="logcat -v threadtime"
+    window.electron.ipcRenderer
+      .invoke('runninglog', logcatCommand)
+      .then((res) => {
+        console.log(res);
+       
+        // console.log(outputCommand)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   return (
     <div>
       <div className="flex justify-between">
         <Online />
       </div>
       <div className="px-24 pt-5 flex flex-col">
-        {/* <pre className="text-black"> hi from electron</pre> */}
-
         <Label
           htmlFor="large-folder-upload"
           value="Select a Folder"
           className="font-semibold text-lg"
         />
-
         <input
           type="file"
           webkitdirectory="true"
@@ -57,20 +84,14 @@ const Takelogs = () => {
           </p>
         )}
       </div>
-      <Button className="m-5">Connected Devices</Button>
+      <Button className="m-5" onClick={handleLogs}>
+        Connected Devices
+      </Button>
       <div className="border border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
-        <pre className="text-white/80">{display}</pre>
+        <pre className="text-white">{display}</pre>
       </div>
     </div>
   )
 }
 
 export default Takelogs
-
-{
-  /* <div className='bg-white w-screen h-screen'>
-    <div className='w-[450px] h-screen overflow-auto text-black '>
-      <pre>{display}</pre>
-    </div>
-    </div> */
-}

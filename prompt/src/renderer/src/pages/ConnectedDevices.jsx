@@ -14,18 +14,24 @@ const ConnectedDevices = () => {
         const outputString = String(output)
         setData(outputString)
         let obj = outputString.split('\n')
+        console.log(obj)
         let next = obj[0].split(' ')
+       let devicename = obj[17].split(' ')
+       console.log(devicename[1])
+        let build = obj[29].split(' ')
         console.log(next[1].toString())
         // let last = next[1];
 
         const buildDetails = {
-          build: next[1],
-          version: next[2]
+deviceName:devicename[1],
+          build: build[1],
+          version: next[0]
         }
         if (callback) callback(buildDetails)
       }
     })
   }
+
   // getBuildDetails();
   console.log(devices)
   const trackDevice = () => {
@@ -51,10 +57,10 @@ const ConnectedDevices = () => {
       }
     })
   }
-
+  
   useEffect(() => {
     trackDevice()
-  }, [])
+  }, [devices])
 
   return (
     <div className="">

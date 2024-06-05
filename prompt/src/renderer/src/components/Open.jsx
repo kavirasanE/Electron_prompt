@@ -24,8 +24,10 @@ const Open = () => {
         Welcome to <span className="react ">PromptHUB</span>
       </div>
       <div className="button">
-        <Link to="/connectdevice" className="bg-blue-900 p-3 z-10 rounded-xl text-white  px-20 m-10">
-          <span className="text-xl font-medium subpixel-antialiased"> Get Started</span>
+        <Link to="/connectdevice" className="text-xl font-medium px-24 subpixel-antialiased ">
+          <Button className="bg-blue-900 hover:bg-blue-900  z-10  px-20 text-white  ">
+            <span className='font-semibold text-xl'>Get Started  </span>
+          </Button>
         </Link>
       </div>
       {/* <div className="action">

@@ -39,42 +39,42 @@ export function Online() {
             className="[&>div]:bg-transparent [&>div]:p-0"
           >
             <div className="flex h-full flex-col justify-between py-2">
-              <div>
-                <form className="pb-3 md:hidden">
-                  <TextInput
-                    icon={HiSearch}
-                    type="search"
-                    placeholder="Search"
-                    required
-                    size={32}
-                  />
-                </form>
-                <Sidebar.Items>
-                  <Sidebar.ItemGroup>
-                    <Sidebar.Item>
-                      <Link to="/logs">Take Logs</Link>
-                    </Sidebar.Item>
-                    <Sidebar.Item>
-                      <Link to="/Home">Test your Commands</Link>
-                    </Sidebar.Item>
-                    {/* <Sidebar.Item href="/demo">Test</Sidebar.Item> */}
-                  </Sidebar.ItemGroup>
-                  <Sidebar.ItemGroup>
-                    <Sidebar.Item>
-                      <Link to="/connectdevice">Connected Devices</Link>
-                    </Sidebar.Item>
-                    <Sidebar.Item>
-                      <Link to="/commands">Log Commands</Link>
-                    </Sidebar.Item>
-                    {/* <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>
+              <form className="pb-3 md:hidden ">
+                <TextInput icon={HiSearch} type="search" placeholder="Search" required size={32} />
+              </form>
+              <Sidebar.Items>
+                <Sidebar.ItemGroup>
+                  <Sidebar.Item>
+                    <Link to="/logs" className="p-2 px-24">
+                      Take Logs
+                    </Link>
+                  </Sidebar.Item>
+                  <Sidebar.Item>
+                    <Link to="/Home" className="p-2 px-24">
+                      Test your Commands
+                    </Link>
+                  </Sidebar.Item>
+                  {/* <Sidebar.Item href="/demo">Test</Sidebar.Item> */}
+                </Sidebar.ItemGroup>
+                <Sidebar.ItemGroup>
+                  <Sidebar.Item>
+                    <Link to="/connectdevice" className="p-2 px-24">
+                      Connected Devices
+                    </Link>
+                  </Sidebar.Item>
+                  <Sidebar.Item>
+                    <Link to="/commands" className="p-2 px-24">
+                      Log Commands
+                    </Link>
+                  </Sidebar.Item>
+                  {/* <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>
                       Components
                     </Sidebar.Item>
                     <Sidebar.Item href="https://github.com/themesberg/flowbite-react/issues" icon={HiInformationCircle}>
                       Help
                     </Sidebar.Item> */}
-                  </Sidebar.ItemGroup>
-                </Sidebar.Items>
-              </div>
+                </Sidebar.ItemGroup>
+              </Sidebar.Items>
             </div>
           </Sidebar>
         </Drawer.Items>

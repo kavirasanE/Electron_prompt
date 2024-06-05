@@ -213,15 +213,20 @@ const Commands = () => {
   // console.log(callback);
 
   const handleOutput = (output) => {
-    console.log(output, 'from parent ready add in state')
+    console.log(typeof output)
+      // let d = JSON.parse(output);
+    // let display = output.split('\\n')
+    console.log(output)
+    // console.log(output, 'from parent ready add in state')
     setOutput(output)
   }
+ 
 
   return (
     <div className="h-screen">
       <Online />
       <div className="bg-white text-black">
-        <div className='mx-3'>
+        <div className="mx-3">
           <Tabs
             className="flex px-2 items-center  justify-start"
             ref={tabsRef}
@@ -232,11 +237,11 @@ const Commands = () => {
             ))}
           </Tabs>
         </div>
-        <div className="flex flex-row justify-between px-2  gap-2 h-screen">
+        <div className="flex flex-row justify-between px-2 gap-2 h-screen">
           <div className="w-1/2 h-screen overflow-y-auto">
             <Table>
               <Table.Head>
-                <Table.HeadCell className="bg-blue-800 text-white font-bold subpixel-antialiased  text-lg text-center">
+                <Table.HeadCell className="bg-blue-800 text-white font-bold subpixel-antialiased text-lg text-center">
                   Commands
                 </Table.HeadCell>
               </Table.Head>
@@ -246,7 +251,7 @@ const Commands = () => {
               <CommandTable item={item} key={index} callback={handleOutput} />
             ))}
           </div>
-          <div className="w-full h-screen rounded-t-xl bg-black overflow-auto ">
+          <div className="w-5/6 h-screen rounded-t-xl bg-black overflow-clip overflow-y-auto">
             <OutputLogs output={output} />
           </div>
         </div>
