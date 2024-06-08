@@ -8,22 +8,22 @@ const DeviceAcordian = ({ device, index }) => {
       <Accordion>
         <Accordion.Panel>
           <Accordion.Title className="bg-blue-800 text-white hover:bg-blue-800 ">
-            <div className="w-[600px] flex flex-row items-center justify-between ">
+            <div className=" w-15/16 flex flex-row items-center justify-between ">
               <p>
-                Device Name: <span>{device.type}</span>
-              </p>
-              <p>
-                DSN: <span>{device.id} </span>
+               {device.deviceName}
               </p>
             </div>
           </Accordion.Title>
           <Accordion.Content>
-            <div className="font-bold text-xl px-5">
+            <div className="font-bold  px-5">
               <div className="flex flex-row justify-between items-center">
                 <p>
-                  Build Details: <span>{device.build}</span>
+                  {device.build}
                 </p>
-                <p>OS:</p>
+                <p>
+                DSN: <span>{device.id} </span>
+              </p>
+              
               </div>
               <div className="flex flex-row justify-between items-center">
                 <div className="flex flex-row justify-start items-center gap-10 p-5">
@@ -34,7 +34,7 @@ const DeviceAcordian = ({ device, index }) => {
                     <Link to="/commands"> Check Commands</Link>
                   </Button>
                 </div>
-                <p>Build Variant:</p>
+                <p>{device.version}</p>
               </div>
             </div>
             {/* <p> {device.status}</p>

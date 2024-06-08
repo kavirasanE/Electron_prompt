@@ -1,14 +1,15 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
+import  { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+// import icon from '../../resources/icon.png'
+import icon from "../../resources/icon.png"
 import output from './output'
-import trackDevice from './trackDevice'
+// import trackDevice from './trackDevice'
 import adbCommands from './adb/adbCommands'
-import listDevices from './DeviceConnections/listDevices'
-import adbShellCommands from './adb/adbShellCommands'
-import adbLogcatCommands from './adb/adbLogcatCommands'
-import { clearInterval } from 'timers'
+// import listDevices from './DeviceConnections/listDevices'
+// import adbShellCommands from './adb/adbShellCommands'
+// import adbLogcatCommands from './adb/adbLogcatCommands'
+// import { clearInterval } from 'timers'
 import adbSavelogs from './adb/adbSavelogs'
 import webSocketServer from './webSocketServer'
 
@@ -19,9 +20,11 @@ function createWindow() {
     height: 670,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    // ...(process.platform === 'linux' ? { icon } : {}),
+    icon: join(__dirname,'../../resources/icon.png'),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
+
       sandbox: false
     }
   })
@@ -98,6 +101,9 @@ app.whenReady().then(() => {
     })
   })
 
+
+  
+
   ipcMain.handle('command', async (event, serializedCommand) => {
     const { command } = JSON.parse(serializedCommand)
     let res = ''
@@ -117,22 +123,9 @@ app.whenReady().then(() => {
     }
   })
 
-  ipcMain.handle('shellCommand', async (event, serializedCommand) => {
-    let res = ''
-    webSocketServer();
-
-    // const output = new Promise((resolve, reject) => {
-    //   adbShellCommands(serializedCommand, (callback) => {
-    //     res += callback
-    //   })
-    // // })
-    // try {
-    //   // const result = await output
-    //   console.log(res, 'result from ipc handle')
-    //   return JSON.stringify(result)
-    // } catch (error) {
-    //   console.log(err, 'Error from ADB shell Command')
-    // }
+  ipcMain.handle('shellCommand', async (event,serializedCommand,device) => {
+    console.log(serializedCommand,"from main index 126th")
+    webSocketServer(serializedCommand,device);
   })
 
 
@@ -140,19 +133,21 @@ app.whenReady().then(() => {
 
 
 
-  ipcMain.handle('runninglog', (event, runningCommand) => {
-    let res = ''
-    let outputCommand
-    outputCommand = adbSavelogs(runningCommand, (callback) => {
-      console.log(callback)
-    })
-    try {
-      let result = callback
-      // console.log(result, 'result from backend')
-      return result
-    } catch (error) {
-      console.log(error)
-    }
+  ipcMain.handle('runninglog', (event, fileLocation) => {
+    
+    adbSavelogs(fileLocation)
+    // let res = ''
+    // let outputCommand
+    // outputCommand = adbSavelogs(runningCommand, (callback) => {
+    //   console.log(callback)
+    // })
+    // try {
+    //   let result = callback
+    //   // console.log(result, 'result from backend')
+    //   return result
+    // } catch (error) {
+    //   console.log(error)
+    // }
   })
 
   app.on('activate', () => {

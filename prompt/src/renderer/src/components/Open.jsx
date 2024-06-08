@@ -19,7 +19,7 @@ const Open = () => {
   }
   return (
     <div className="background">
-      <img alt="logo" className="logo" src={electronLogo} />
+      <img alt="logo" className='w-40 h-40 rounded-full bg-white hover:shadow-xl hover:shadow-white/50 shadow-around' src={electronLogo} />
       <div className="text">
         Welcome to <span className="react ">PromptHUB</span>
       </div>

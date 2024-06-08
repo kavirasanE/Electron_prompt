@@ -1,38 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { Online } from '../components/Sidebar'
-import { Link } from 'react-router-dom'
 import { Button, Label } from 'flowbite-react'
-import {encode, decode} from "messagepack";
+
 
 const Takelogs = () => {
   const [folder, setFolder] = useState('')
-  const [display, setDisplay] = useState('')
+  const [display, setDisplay] = useState("")
 
- 
-  // const bin1 = encode({foo: 7, bar: "seven"});
-  // console.log("encdeobj",bin1);
-  // const obj = decode(bin1);
-  // console.log("decode obj",obj);
-   
-  // const bin2 = encode("foobar");
-  // console.log("encode value",bin2);
-  // const str = decode(bin2);
-  // console.log("decode string",str);
-
-
-
-
-
-  window.socket.device((err, output) => {
-    if (err) {
-      console.log(err)
-    } else {
-      setDisplay(output)
-      // console.log(display)
-    }
-  })
+  // window.socket.device((err, output) => {
+  //   if (err) {
+  //     console.log(err)
+  //   } else {
+  //     setDisplay(output)
+  //     // console.log(display)
+  //   }
+  // })
 
   const handleChange = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const fileName = e.target.files[0].name
     const res = e.target.files[0].path
     const lastIndex = res.lastIndexOf('\\')
@@ -45,15 +31,23 @@ const Takelogs = () => {
     }
   }
   const handleLogs = () => {
-    console.log('dumpsys')
-    setDisplay('dumpsys')
-    let logcatCommand ="logcat -v threadtime"
+    // let logcatCommand ="logcat -v threadtime"
+    let location = folder
     window.electron.ipcRenderer
-      .invoke('runninglog', logcatCommand)
+      .invoke('runninglog', location)
       .then((res) => {
+        const socket = new WebSocket('ws://localhost:3000')
+        socket.onopen = () => {
+          console.log("connected to Take logs")
+        }
+        socket.onmessage = ( event) => {
+          let logs = JSON.parse(event.data)
+          setDisplay(logs)
+        }
         console.log(res);
-       
-        // console.log(outputCommand)
+        socket.onerror = () => {
+          console.log( "take logs Error")
+        }
       })
       .catch((err) => {
         console.log(err)

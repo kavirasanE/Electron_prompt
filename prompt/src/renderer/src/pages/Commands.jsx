@@ -37,12 +37,12 @@ const Commands = () => {
         },
         {
           command:
-            'adb shell am startservice -a com.amazon.device.software.ota.service.CHECK_FOR_UPDATES -n com.amazon.device.software.ota/.OtaService',
+            'am startservice -a com.amazon.device.software.ota.service.CHECK_FOR_UPDATES -n com.amazon.device.software.ota/.OtaService',
           description: 'To check and force app OTA download to your device.'
         },
         {
           command:
-            'adb shell am startservice -a com.amazon.device.software.ota.service.START_OBTRUSIVE -n com.amazon.device.software.ota/.OtaService',
+            'am startservice -a com.amazon.device.software.ota.service.START_OBTRUSIVE -n com.amazon.device.software.ota/.OtaService',
           description: 'Command to start installation.'
         },
         {
@@ -124,8 +124,8 @@ const Commands = () => {
       title: 'Spotify Commands',
       commands: [
         {
-          command: 'exampleSpotifyCommand',
-          description: 'This is an example command for Spotify operations.'
+          command: 'dumpsys package com.amazon.spotify.mediabrowserservice | grep version',
+          description: 'To check Spotify SMBS apk details'
         }
       ]
     },
@@ -197,13 +197,13 @@ const Commands = () => {
   const [section, setSection] = useState(data)
   const [activeSection, setActiveSection] = useState('GeneralCommands')
   const [filteredCommands, setfilterCommands] = useState([])
-  const [output, setOutput] = useState()
-
+  const [output, setOutput] = useState([])
+  const logRef =useRef(0);
   const filterCommands = (id) => {
     const filter = data.filter((item) => item.id == id)
     setfilterCommands(filter[0].commands)
   }
-  console.log(filteredCommands)
+  // console.log(filteredCommands)
 
   useEffect(() => {
     console.log('act', activeTab)
@@ -213,15 +213,14 @@ const Commands = () => {
   // console.log(callback);
 
   const handleOutput = (output) => {
-    console.log(typeof output)
-      // let d = JSON.parse(output);
-    // let display = output.split('\\n')
-    console.log(output)
-    // console.log(output, 'from parent ready add in state')
     setOutput(output)
+    // console.log(output)
   }
- 
-
+ useEffect(() => {
+        if(logRef.current) {
+          logRef.current.scrollTop =logRef.current.scrollHeight
+        }
+ },[output])
   return (
     <div className="h-screen">
       <Online />
@@ -251,7 +250,7 @@ const Commands = () => {
               <CommandTable item={item} key={index} callback={handleOutput} />
             ))}
           </div>
-          <div className="w-5/6 h-screen rounded-t-xl bg-black overflow-clip overflow-y-auto">
+          <div ref={logRef} className="w-5/6 h-screen rounded-t-xl bg-black  overflow-clip scroll-auto overflow-y-auto">
             <OutputLogs output={output} />
           </div>
         </div>
