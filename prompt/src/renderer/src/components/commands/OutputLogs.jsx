@@ -13,7 +13,7 @@ const OutputLogs = ({ output }) => {
         {/* <span>Connected Device:</span>
       <span>DSN:</span> */}
         <button onClick={() => setPauseRunningCommand(!pauseRunningCommand)} className='text-yellow-200  rounded-sm text-xl p-1 '>
-          {pauseRunningCommand ? <MdOutlinePauseCircleOutline /> : <GrResume />}
+          {/* {pauseRunningCommand ? <MdOutlinePauseCircleOutline /> : <GrResume />} */}
         </button>
         <button className='flex items-center gap-1 px-4 text-sm font-normal'><MdContentCopy /> Copy</button>
       </p>

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 // import Versions from './Versions'
 import '../assets/main.css'
 import electronLogo from '../assets/electron.svg'
+
 import './open.css'
 import { Link } from 'react-router-dom'
 import { Button } from 'flowbite-react'
@@ -19,13 +20,13 @@ const Open = () => {
   }
   return (
     <div className="background">
-      <img alt="logo" className='w-40 h-40 rounded-full bg-white hover:shadow-xl hover:shadow-white/50 shadow-around' src={electronLogo} />
+      <img alt="logo" className='w-40 h-40 rounded-3xl  blur-xs  drop-shadow-xl ' src={electronLogo} />
       <div className="text">
         Welcome to <span className="react ">PromptHUB</span>
       </div>
       <div className="button">
         <Link to="/connectdevice" className="text-xl font-medium px-24 subpixel-antialiased ">
-          <Button className="bg-blue-900 hover:bg-blue-900  z-10  px-20 text-white  ">
+          <Button className="bg-blue-900 hover:bg-blue-900 px-20 text-white  ">
             <span className='font-semibold text-xl'>Get Started  </span>
           </Button>
         </Link>

@@ -64,7 +64,7 @@ export function Online() {
                   </Link>
                   <Link to="/contibutors">
                     <Sidebar.Item icon={HiOutlineUserGroup}>
-                      Contributors
+                      Meet our Team
                     </Sidebar.Item>
                   </Link>
                   <Sidebar.Item
