@@ -1,9 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import { Online } from '../components/Sidebar'
 import { Tabs, Table } from 'flowbite-react'
 import CommandTable from '../components/commands/CommandTable'
 import OutputLogs from '../components/commands/OutputLogs'
-
+import Footer from '../components/Footer'
+import { DataContext } from '../components/context/DataProvider'
+import Lottie from 'react-lottie'
+import loading from "../assets/loading.json"
 const Commands = () => {
   const data = [
     {
@@ -191,6 +194,7 @@ const Commands = () => {
     }
   ]
 
+  const { commandsLoading, setCommandsLoading } = useContext(DataContext)
   const tabsRef = useRef(null)
   const [activeTab, setActiveTab] = useState(0)
 
@@ -198,7 +202,7 @@ const Commands = () => {
   const [activeSection, setActiveSection] = useState('GeneralCommands')
   const [filteredCommands, setfilterCommands] = useState([])
   const [output, setOutput] = useState([])
-  const logRef =useRef(0);
+  const logRef = useRef(0)
   const filterCommands = (id) => {
     const filter = data.filter((item) => item.id == id)
     setfilterCommands(filter[0].commands)
@@ -216,13 +220,28 @@ const Commands = () => {
     setOutput(output)
     // console.log(output)
   }
- useEffect(() => {
-        if(logRef.current) {
-          logRef.current.scrollTop =logRef.current.scrollHeight
-        }
- },[output])
+  useEffect(() => {
+    if (logRef.current) {
+      logRef.current.scrollTop = logRef.current.scrollHeight
+    }
+  }, [output])
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loading,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  }
+
+
   return (
-    <div className="h-screen">
+    <div className="max-h-screen h-full relative">
+      {commandsLoading && 
+      <div className=' bg-white/20 h-full w-full absolute z-10 flex justify-center items-center text-white'> 
+      <Lottie options={defaultOptions} height={400} width={500} />
+      </div>}
       <Online />
       <div className="bg-white text-black">
         <div className="mx-3">
@@ -250,11 +269,17 @@ const Commands = () => {
               <CommandTable item={item} key={index} callback={handleOutput} />
             ))}
           </div>
-          <div ref={logRef} className="w-5/6 h-screen rounded-t-xl bg-black  overflow-clip scroll-auto overflow-y-auto">
+          <div
+            ref={logRef}
+            className="w-5/6 h-screen rounded-t-xl bg-black  overflow-clip scroll-auto overflow-y-auto"
+          >
             <OutputLogs output={output} />
           </div>
         </div>
       </div>
+     <div className='mt-2'>
+      <Footer/>
+     </div>
     </div>
   )
 }

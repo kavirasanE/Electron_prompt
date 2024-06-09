@@ -51,7 +51,7 @@ export function Online() {
                     <Sidebar.Item icon={TbPrompt}>Take Logs</Sidebar.Item>
                   </Link>
                   <Link to="/Home" className="">
-                    <Sidebar.Item icon={TbBrandSpeedtest}>Test your Commands</Sidebar.Item>
+                    <Sidebar.Item icon={TbBrandSpeedtest}>Test your Commands (BETA)</Sidebar.Item>
                   </Link>
                   {/* <Sidebar.Item href="/demo">Test</Sidebar.Item> */}
                 </Sidebar.ItemGroup>
@@ -67,12 +67,14 @@ export function Online() {
                       Meet our Team
                     </Sidebar.Item>
                   </Link>
+                  
+                  <Link to="/thoughts">
                   <Sidebar.Item
-                    href="https://github.com/themesberg/flowbite-react/issues"
                     icon={HiInformationCircle}
                   >
-                    Help
+                    Share your Thoughts
                   </Sidebar.Item>
+                  </Link>
                 </Sidebar.ItemGroup>
               </Sidebar.Items>
             </div>

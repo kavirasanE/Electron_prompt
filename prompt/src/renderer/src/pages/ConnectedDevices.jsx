@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Online } from '../components/Sidebar'
 import DeviceAcordian from '../components/ConnectedDevices/DeviceAcordian'
-// import { Player } from '@lottiefiles/react-lottie-player';
 import animation from '../assets/animation.json'
 import Lottie from 'react-lottie'
 import { DataContext } from '../components/context/DataProvider'
+import Footer from '../components/Footer'
 const ConnectedDevices = () => {
   const {listDevices,setListDevices} =useContext(DataContext)
   const [devices, setDevices] = useState([])
@@ -93,7 +93,8 @@ const ConnectedDevices = () => {
       <Online />
       <div className="p-5">
         <div>
-          <p className="font-bold text-2xl">Connected Devices :</p>
+        {listDevices.length <=0 ? (  <p className="font-bold text-2xl ">No Devices Connected</p>) : (  <p className="font-bold text-2xl">Connected Devices :</p>)}
+        
         </div>
         {listDevices.length <= 0 ? (
           <div className="flex flex-row  justify-center items-center p-10">
@@ -108,6 +109,9 @@ const ConnectedDevices = () => {
             ))}
           </div>
         )}
+      </div>
+      <div className='absolute bottom-0 w-full'>
+        <Footer/>
       </div>
     </div>
   )

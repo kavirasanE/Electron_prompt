@@ -5,10 +5,11 @@ import { decode } from 'messagepack'
 import { DataContext } from '../context/DataProvider'
 
 const CommandTable = ({ item, index, callback }) => {
-  const { setCommandstoOutput, pauseRunningCommand, listDevices } = useContext(DataContext)
+  const { setCommandstoOutput, pauseRunningCommand, listDevices,commandsLoading,setCommandsLoading } = useContext(DataContext)
   console.log(pauseRunningCommand)
-
+   
   const handleClick = (e) => {
+    setCommandsLoading(true)
     console.log(listDevices)
     console.log(item)
     setCommandstoOutput(item.command)
@@ -31,7 +32,11 @@ const CommandTable = ({ item, index, callback }) => {
         setTimeout(() => {
           callback(last)
         }, 500)
+       
       }
+      setTimeout(()=> {
+        setCommandsLoading(false)
+      },1000)
       
       socket.onclose = () => {
         console.log('Disconnected from WebSocket server')

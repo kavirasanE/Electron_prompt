@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Online } from '../components/Sidebar'
 import { Button, Label } from 'flowbite-react'
-
+import { HiInformationCircle } from "react-icons/hi";
+import { Alert } from "flowbite-react";
 
 const Takelogs = () => {
   const [folder, setFolder] = useState('')
   const [display, setDisplay] = useState("")
+  const [alert,setAlert] =useState(false)
 
   // window.socket.device((err, output) => {
   //   if (err) {
@@ -31,6 +33,13 @@ const Takelogs = () => {
     }
   }
   const handleLogs = () => {
+    if(folder == ""){
+      setAlert(true);
+      return;
+    }
+    else{
+      setAlert(false)
+    }
     // let logcatCommand ="logcat -v threadtime"
     let location = folder
     window.electron.ipcRenderer
@@ -78,12 +87,19 @@ const Takelogs = () => {
           </p>
         )}
       </div>
+      {alert &&
+       <div className='mx-20 p-4'>
+        <Alert color="warning" icon={HiInformationCircle}>
+          <span className="font-medium">Working Directory is not set! </span> Please set Working directory before taking logs.
+        </Alert>
+      </div>}
       <Button className="m-5" onClick={handleLogs}>
-        Connected Devices
+        Take Logs
       </Button>
       <div className="border border-gray-300 bg-black/90 mx-10 mt-10 h-96 overflow-y-auto p-2 rounded-xl">
         <pre className="text-white">{display}</pre>
       </div>
+      
     </div>
   )
 }

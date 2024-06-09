@@ -6,7 +6,7 @@ const DataProvider = ({ children }) => {
   const [commandstoOuput, setCommandstoOutput] = useState()
   const [pauseRunningCommand, setPauseRunningCommand] = useState(true)
   const [listDevices,setListDevices] =useState([]);
-
+  const [commandsLoading,setCommandsLoading] =useState(false)
   return (
     <DataContext.Provider
       value={{
@@ -15,7 +15,9 @@ const DataProvider = ({ children }) => {
         pauseRunningCommand,
         setPauseRunningCommand,
         listDevices,
-        setListDevices
+        setListDevices,
+        commandsLoading,
+        setCommandsLoading
       }}
     >
       {children}
