@@ -1,7 +1,4 @@
 
-
- 
- 
  .background{
   width: 100vw;
   height: 100vh;
@@ -32,12 +29,7 @@
 }
 .button:hover {
   filter: drop-shadow(0 0 1.2em #1b46c6aa);
- 
 } 
-.button{
-  margin-top: 25px;
- 
-}
 
 
 .text {

@@ -3,19 +3,15 @@ import { useState } from 'react'
 import {
   HiChartPie,
   HiClipboard,
+  HiCollection,
   HiInformationCircle,
   HiLogin,
   HiPencil,
   HiSearch,
-  HiOutlineUserGroup,
   HiShoppingBag,
   HiUsers
 } from 'react-icons/hi'
-import { TbPrompt, TbBrandSpeedtest } from 'react-icons/tb'
-import { HiCommandLine } from 'react-icons/hi2'
-import { PiPlugsConnectedDuotone } from 'react-icons/pi'
 import { RxHamburgerMenu } from 'react-icons/rx'
-import { Link } from 'react-router-dom'
 export function Online() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -29,10 +25,8 @@ export function Online() {
           className="rounded-lg border border-gray-100 p-1.5 shadow-lg shadow-black/50 text-black cursor-pointer"
           onClick={() => setIsOpen(true)}
         />
-        <p className="rounded-md font-bold text-xl  p-2 text-black">
-          Prompt <span className="bg-black p-0.5 rounded-sm px-2 text-white">hub</span>
-        </p>
-        <p></p>
+       <p className='rounded-md font-bold text-xl bg-black p-2 text-white'>Prompt <span className='bg-amber-500 p-0.5 rounded-sm px-2 text-white'>hub</span></p>
+       <p></p>
       </div>
       <Drawer open={isOpen} onClose={handleClose}>
         <Drawer.Header title="Prompt Hub" titleIcon={() => <></>} />
@@ -41,42 +35,35 @@ export function Online() {
             aria-label="Sidebar with multi-level dropdown example"
             className="[&>div]:bg-transparent [&>div]:p-0"
           >
-            <div className="flex h-full flex-col justify-center ">
-              <form className="pb-3 md:hidden ">
-                <TextInput icon={HiSearch} type="search" placeholder="Search" required size={32} />
-              </form>
-              <Sidebar.Items>
-                <Sidebar.ItemGroup>
-                  <Link to="/logs" className="">
-                    <Sidebar.Item icon={TbPrompt}>Take Logs</Sidebar.Item>
-                  </Link>
-                  <Link to="/Home" className="">
-                    <Sidebar.Item icon={TbBrandSpeedtest}>Test your Commands (BETA)</Sidebar.Item>
-                  </Link>
-                  {/* <Sidebar.Item href="/demo">Test</Sidebar.Item> */}
-                </Sidebar.ItemGroup>
-                <Sidebar.ItemGroup>
-                  <Link to="/connectdevice" className="">
-                    <Sidebar.Item icon={PiPlugsConnectedDuotone}>Connected Devices</Sidebar.Item>
-                  </Link>
-                  <Link to="/commands" className=" ">
-                    <Sidebar.Item icon={HiCommandLine}>Log Commands</Sidebar.Item>
-                  </Link>
-                  <Link to="/contibutors">
-                    <Sidebar.Item icon={HiOutlineUserGroup}>
-                      Meet our Team
+            <div className="flex h-full flex-col justify-between py-2">
+              <div>
+                <form className="pb-3 md:hidden">
+                  <TextInput
+                    icon={HiSearch}
+                    type="search"
+                    placeholder="Search"
+                    required
+                    size={32}
+                  />
+                </form>
+                <Sidebar.Items>
+                  <Sidebar.ItemGroup>
+                    <Sidebar.Item href="/logs">Take Logs</Sidebar.Item>
+                    <Sidebar.Item href="/Home">Test your Commands</Sidebar.Item>
+                    {/* <Sidebar.Item href="/demo">Test</Sidebar.Item> */}
+                  </Sidebar.ItemGroup>
+                  <Sidebar.ItemGroup>
+                    <Sidebar.Item href="/connectdevice">Connected Devices</Sidebar.Item>
+                    <Sidebar.Item href="/commands">Log Commands</Sidebar.Item>
+                    {/* <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>
+                      Components
                     </Sidebar.Item>
-                  </Link>
-                  
-                  <Link to="/thoughts">
-                  <Sidebar.Item
-                    icon={HiInformationCircle}
-                  >
-                    Share your Thoughts
-                  </Sidebar.Item>
-                  </Link>
-                </Sidebar.ItemGroup>
-              </Sidebar.Items>
+                    <Sidebar.Item href="https://github.com/themesberg/flowbite-react/issues" icon={HiInformationCircle}>
+                      Help
+                    </Sidebar.Item> */}
+                  </Sidebar.ItemGroup>
+                </Sidebar.Items>
+              </div>
             </div>
           </Sidebar>
         </Drawer.Items>
