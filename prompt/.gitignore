@@ -1,6 +1,7 @@
 node_modules
 dist
 dist.7z
+node_modules
 out
 .DS_Store
 *.log*
