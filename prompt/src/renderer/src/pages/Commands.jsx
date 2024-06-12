@@ -1,9 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import { Online } from '../components/Sidebar'
 import { Tabs, Table } from 'flowbite-react'
 import CommandTable from '../components/commands/CommandTable'
 import OutputLogs from '../components/commands/OutputLogs'
-
+import Footer from '../components/Footer'
+import { DataContext } from '../components/context/DataProvider'
+import Lottie from 'react-lottie'
+import loading from "../assets/loading.json"
 const Commands = () => {
   const data = [
     {
@@ -37,12 +40,12 @@ const Commands = () => {
         },
         {
           command:
-            'adb shell am startservice -a com.amazon.device.software.ota.service.CHECK_FOR_UPDATES -n com.amazon.device.software.ota/.OtaService',
+            'am startservice -a com.amazon.device.software.ota.service.CHECK_FOR_UPDATES -n com.amazon.device.software.ota/.OtaService',
           description: 'To check and force app OTA download to your device.'
         },
         {
           command:
-            'adb shell am startservice -a com.amazon.device.software.ota.service.START_OBTRUSIVE -n com.amazon.device.software.ota/.OtaService',
+            'am startservice -a com.amazon.device.software.ota.service.START_OBTRUSIVE -n com.amazon.device.software.ota/.OtaService',
           description: 'Command to start installation.'
         },
         {
@@ -124,8 +127,8 @@ const Commands = () => {
       title: 'Spotify Commands',
       commands: [
         {
-          command: 'exampleSpotifyCommand',
-          description: 'This is an example command for Spotify operations.'
+          command: 'dumpsys package com.amazon.spotify.mediabrowserservice | grep version',
+          description: 'To check Spotify SMBS apk details'
         }
       ]
     },
@@ -191,19 +194,20 @@ const Commands = () => {
     }
   ]
 
+  const { commandsLoading, setCommandsLoading } = useContext(DataContext)
   const tabsRef = useRef(null)
   const [activeTab, setActiveTab] = useState(0)
 
   const [section, setSection] = useState(data)
   const [activeSection, setActiveSection] = useState('GeneralCommands')
   const [filteredCommands, setfilterCommands] = useState([])
-  const [output, setOutput] = useState()
-
+  const [output, setOutput] = useState([])
+  const logRef = useRef(0)
   const filterCommands = (id) => {
     const filter = data.filter((item) => item.id == id)
     setfilterCommands(filter[0].commands)
   }
-  console.log(filteredCommands)
+  // console.log(filteredCommands)
 
   useEffect(() => {
     console.log('act', activeTab)
@@ -213,15 +217,34 @@ const Commands = () => {
   // console.log(callback);
 
   const handleOutput = (output) => {
-    console.log(output, 'from parent ready add in state')
     setOutput(output)
+    // console.log(output)
+  }
+  useEffect(() => {
+    if (logRef.current) {
+      logRef.current.scrollTop = logRef.current.scrollHeight
+    }
+  }, [output])
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loading,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
   }
 
+
   return (
-    <div className="h-screen">
+    <div className="max-h-screen h-full relative">
+      {commandsLoading && 
+      <div className=' bg-white/20 h-full w-full absolute z-10 flex justify-center items-center text-white'> 
+      <Lottie options={defaultOptions} height={400} width={500} />
+      </div>}
       <Online />
       <div className="bg-white text-black">
-        <div className='mx-3'>
+        <div className="mx-3">
           <Tabs
             className="flex px-2 items-center  justify-start"
             ref={tabsRef}
@@ -232,11 +255,11 @@ const Commands = () => {
             ))}
           </Tabs>
         </div>
-        <div className="flex flex-row justify-between px-2  gap-2 h-screen">
+        <div className="flex flex-row justify-between px-2 gap-2 h-screen">
           <div className="w-1/2 h-screen overflow-y-auto">
             <Table>
               <Table.Head>
-                <Table.HeadCell className="bg-blue-800 text-white font-bold subpixel-antialiased  text-lg text-center">
+                <Table.HeadCell className="bg-blue-800 text-white font-bold subpixel-antialiased text-lg text-center">
                   Commands
                 </Table.HeadCell>
               </Table.Head>
@@ -246,11 +269,17 @@ const Commands = () => {
               <CommandTable item={item} key={index} callback={handleOutput} />
             ))}
           </div>
-          <div className="w-full h-screen rounded-t-xl bg-black overflow-auto ">
+          <div
+            ref={logRef}
+            className="w-5/6 h-screen rounded-t-xl bg-black  overflow-clip scroll-auto overflow-y-auto"
+          >
             <OutputLogs output={output} />
           </div>
         </div>
       </div>
+     <div className='mt-2'>
+      <Footer/>
+     </div>
     </div>
   )
 }
