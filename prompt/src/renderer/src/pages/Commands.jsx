@@ -246,7 +246,7 @@ const Commands = () => {
       <div className="bg-white text-black">
         <div className="mx-3">
           <Tabs
-            className="flex px-2 items-center  justify-start"
+            className="flex px-2 items-center justify-start"
             ref={tabsRef}
             onActiveTabChange={(tab) => setActiveTab(tab)}
           >
