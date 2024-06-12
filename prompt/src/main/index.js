@@ -1,17 +1,12 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import  { join } from 'path'
+import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-// import icon from '../../resources/icon.png'
-import icon from "../../resources/icon.png"
+import icon from '../../resources/icon.png?asset'
 import output from './output'
-// import trackDevice from './trackDevice'
+import trackDevice from './trackDevice'
 import adbCommands from './adb/adbCommands'
-// import listDevices from './DeviceConnections/listDevices'
-// import adbShellCommands from './adb/adbShellCommands'
-// import adbLogcatCommands from './adb/adbLogcatCommands'
-// import { clearInterval } from 'timers'
-import adbSavelogs from './adb/adbSavelogs'
-import webSocketServer from './webSocketServer'
+import listDevices from './DeviceConnections/listDevices'
+import adbShellCommands from './adb/adbShellCommands'
 
 function createWindow() {
   // Create the browser window.
@@ -20,11 +15,9 @@ function createWindow() {
     height: 670,
     show: false,
     autoHideMenuBar: true,
-    // ...(process.platform === 'linux' ? { icon } : {}),
-    icon: join(__dirname,'../../resources/icon.png'),
+    ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-
       sandbox: false
     }
   })
@@ -47,11 +40,13 @@ function createWindow() {
   }
 }
 
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 
 app.whenReady().then(() => {
+
   // Set app user model id for windows
 
   electronApp.setAppUserModelId('com.electron')
@@ -63,9 +58,8 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-
-  // trackDevice()
-  adbCommands()
+  trackDevice();
+  adbCommands();
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
@@ -101,9 +95,6 @@ app.whenReady().then(() => {
     })
   })
 
-
-  
-
   ipcMain.handle('command', async (event, serializedCommand) => {
     const { command } = JSON.parse(serializedCommand)
     let res = ''
@@ -123,32 +114,22 @@ app.whenReady().then(() => {
     }
   })
 
-  ipcMain.handle('shellCommand', async (event,serializedCommand,device) => {
-    console.log(serializedCommand,"from main index 126th")
-    webSocketServer(serializedCommand,device);
-  })
-
-
-
-
-
-
-  ipcMain.handle('runninglog', (event, fileLocation) => {
-    
-    adbSavelogs(fileLocation)
-    // let res = ''
-    // let outputCommand
-    // outputCommand = adbSavelogs(runningCommand, (callback) => {
-    //   console.log(callback)
-    // })
-    // try {
-    //   let result = callback
-    //   // console.log(result, 'result from backend')
-    //   return result
-    // } catch (error) {
-    //   console.log(error)
-    // }
-  })
+    ipcMain.handle('shellCommand' ,async (event,serializedCommand) => {
+      let res = '' 
+      const output = new Promise((resolve,reject) => {
+           adbShellCommands(serializedCommand, (callback) => {
+            res += callback,
+            resolve(res)
+           })
+      })
+      try {
+        const result = await output 
+        console.log(result,"result from ipc handle");
+        return JSON.stringify(result)
+      }catch(error) {
+        console.log(err, "Error from ADB shell Command")
+      }
+    })
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
