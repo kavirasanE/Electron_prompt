@@ -16,6 +16,7 @@ import { HiCommandLine } from 'react-icons/hi2'
 import { PiPlugsConnectedDuotone } from 'react-icons/pi'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { Link } from 'react-router-dom'
+import quip from "../assets/quip.png"
 export function Online() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -32,7 +33,9 @@ export function Online() {
         <p className="rounded-md font-bold text-xl  p-2 text-black">
           Prompt <span className="bg-black p-0.5 rounded-sm px-2 text-white">hub</span>
         </p>
-        <p></p>
+        <a href='https://quip-amazon.com/3CxOAyamZbJl/Untitled#temp:C:eET1d0643d10858404087b11218a' target='_blank'>
+          <img src={quip} className='w-20 h-10 object-contain cursor-pointer' />
+        </a>
       </div>
       <Drawer open={isOpen} onClose={handleClose}>
         <Drawer.Header title="Prompt Hub" titleIcon={() => <></>} />
@@ -64,7 +67,7 @@ export function Online() {
                   </Link>
                   <Link to="/contibutors">
                     <Sidebar.Item icon={HiOutlineUserGroup}>
-                      Meet our Team
+                    About Prompt Hub
                     </Sidebar.Item>
                   </Link>
                   

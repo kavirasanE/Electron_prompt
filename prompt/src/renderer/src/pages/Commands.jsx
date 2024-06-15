@@ -8,19 +8,12 @@ import { DataContext } from '../components/context/DataProvider'
 import Lottie from 'react-lottie'
 import loading from "../assets/loading.json"
 const Commands = () => {
+  
   const data = [
     {
       id: 0,
       title: 'GeneralCommands',
       commands: [
-        {
-          command: 'adb',
-          description: 'testing'
-        },
-        {
-          command: 'dumpsys',
-          description: 'testing'
-        },
         {
           command: 'dumpsys activity service WhadService',
           description: 'Dumpsys command for CSM/FTV devices to know ASD, ASD score, TSS.'
@@ -97,10 +90,6 @@ const Commands = () => {
         {
           command: 'adb logcat -v threadtime | grep -i skew',
           description: 'To check the BT skew values.'
-        },
-        {
-          command: 'logcat -v threadtime',
-          description: 'For Running logs.'
         },
         {
           command: 'getprop | grep build',
@@ -193,6 +182,7 @@ const Commands = () => {
       ]
     }
   ]
+  
 
   const { commandsLoading, setCommandsLoading } = useContext(DataContext)
   const tabsRef = useRef(null)
@@ -210,7 +200,7 @@ const Commands = () => {
   // console.log(filteredCommands)
 
   useEffect(() => {
-    console.log('act', activeTab)
+    // console.log('act', activeTab)
     filterCommands(activeTab)
   }, [activeTab])
 
@@ -243,10 +233,10 @@ const Commands = () => {
       <Lottie options={defaultOptions} height={400} width={500} />
       </div>}
       <Online />
-      <div className="bg-white text-black">
+      <div className="bg-white text-black  ">
         <div className="mx-3">
           <Tabs
-            className="flex px-2 items-center justify-start"
+            className="flex px-2 items-center  justify-start"
             ref={tabsRef}
             onActiveTabChange={(tab) => setActiveTab(tab)}
           >

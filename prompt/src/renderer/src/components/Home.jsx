@@ -5,6 +5,7 @@ import { Online } from './Sidebar'
 import copy from 'copy-to-clipboard'
 import toast from 'react-hot-toast'
 import Footer from './Footer'
+import Marquee from 'react-fast-marquee'
 
 export default function Home() {
   const [command, setCommand] = useState('')
@@ -40,12 +41,18 @@ export default function Home() {
   }
 
   return (
-    <div className="p-5 bg-white">
+    <div className="pt- bg-white">
       <div className="flex justify-between items-center">
         <Online />
         <Link to="/" className=" border-2 w-36 p-2 break-all rounded-lg text-white bg-black/80">
           Back to Home
         </Link>
+      </div>
+
+      <div className='bg-yellow-100'>
+      <Marquee>
+        <p className='my-5 p-1 rounded-lg font-bold text-lg  '>"This page is experimental, and we are working on it. It will be in production soon! Have a good day!".</p>
+      </Marquee>
       </div>
       <div className="px-24 pt-5">
         <form className="flex max-w-md flex-col gap-4">

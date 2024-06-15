@@ -9,7 +9,7 @@ function adbShellCommands(message, device, callback) {
   // console.log(message, "from adb shell command");
   console.log(device)
   commandMessage = message
-  console.log(commandMessage, ' after buffer')
+  // console.log(commandMessage, ' after buffer')
 
   
     if (activeStream) {

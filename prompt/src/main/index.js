@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain ,dialog} from 'electron'
 import  { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 // import icon from '../../resources/icon.png'
@@ -12,6 +12,7 @@ import adbCommands from './adb/adbCommands'
 // import { clearInterval } from 'timers'
 import adbSavelogs from './adb/adbSavelogs'
 import webSocketServer from './webSocketServer'
+
 
 function createWindow() {
   // Create the browser window.
@@ -101,9 +102,7 @@ app.whenReady().then(() => {
     })
   })
 
-
   
-
   ipcMain.handle('command', async (event, serializedCommand) => {
     const { command } = JSON.parse(serializedCommand)
     let res = ''
@@ -115,7 +114,7 @@ app.whenReady().then(() => {
     })
     try {
       const result = await outputPromise
-      console.log(result)
+      // console.log(result)
       return JSON.stringify(result)
     } catch (error) {
       console.error('Error executing command:', error)
@@ -124,30 +123,34 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('shellCommand', async (event,serializedCommand,device) => {
-    console.log(serializedCommand,"from main index 126th")
+    // console.log(serializedCommand,"from main index 126th")
     webSocketServer(serializedCommand,device);
+  })
+   
+
+  ipcMain.handle('getpath', async () => {
+    let mainWindow;
+    try {
+      const result = await  dialog.showOpenDialog(mainWindow, {
+        properties: ['openDirectory']
+      });
+      if(result.canceled) {
+        return null ;
+      }
+      else{
+        console.log(result.canceled)
+        return result.filePaths;
+        // console.log(result.filePaths)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+   
   })
 
 
-
-
-
-
   ipcMain.handle('runninglog', (event, fileLocation) => {
-    
     adbSavelogs(fileLocation)
-    // let res = ''
-    // let outputCommand
-    // outputCommand = adbSavelogs(runningCommand, (callback) => {
-    //   console.log(callback)
-    // })
-    // try {
-    //   let result = callback
-    //   // console.log(result, 'result from backend')
-    //   return result
-    // } catch (error) {
-    //   console.log(error)
-    // }
   })
 
   app.on('activate', () => {

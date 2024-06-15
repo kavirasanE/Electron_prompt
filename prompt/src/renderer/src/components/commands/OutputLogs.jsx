@@ -29,8 +29,7 @@ const OutputLogs = ({ output }) => {
   return (
     <div className="text-white">
       <p className="bg-white/20 p-2  font-medium subpixel-antialiased flex justify-between items-center">
-        {/* <span>Connected Device:</span>
-      <span>DSN:</span> */}
+      
         <button
           onClick={() => setPauseRunningCommand(!pauseRunningCommand)}
           className="text-yellow-200  rounded-sm text-xl p-1 "
@@ -47,14 +46,10 @@ const OutputLogs = ({ output }) => {
             '! Copied'
           )}
         </button>
-        {/* <button className="flex items-center gap-1 px-4 text-sm font-normal" onClick={handleCopy}>
-          <MdContentCopy /> Copy Commands
-        </button> */}
       </p>
       <pre className="text-yellow-200 truncate p-2" >
         Command : {commandstoOuput}
       </pre>
-      {/* <pre className="p-5 break-all text-wrap" ref={textRef} >{output} </pre> */}
       <pre className="p-5 break-all text-wrap" ref={textRef}>{output} </pre>
     </div>
   )

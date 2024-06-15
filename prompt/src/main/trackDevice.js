@@ -21,6 +21,7 @@ function trackDevice(callback) {
     })
     .catch(function (err) {
       console.error('Something went wrong:', err.stack)
+      trackDevice(callback);
     })
 
   console.log('Device Connected')

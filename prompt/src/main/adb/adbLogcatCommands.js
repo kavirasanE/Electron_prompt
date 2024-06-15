@@ -38,7 +38,7 @@ function adbLogcatCommands({runningCommand, callback}) {
   // Connect logcat to the stream
   reader = logcat.readStream(proc.stdout)
   reader.on('entry', (entry) => {
-    console.log(entry.message)
+    // console.log(entry.message)
     callback(entry.message);
   })
 

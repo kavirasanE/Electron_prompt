@@ -10,6 +10,7 @@ const ConnectedDevices = () => {
   const [devices, setDevices] = useState([])
   const [data, setData] = useState([])
   // console.log(window.deviceConnect)
+
   const getBuildDetails = async (callback) => {
     await window.deviceConnect.device((datas, output) => {
       if (datas) {
@@ -55,7 +56,8 @@ const ConnectedDevices = () => {
         setListDevices((prevDevices) => {
           // if (data.status === 'plug') {
           // let know =data.id
-          if (data.status === 'plug' && !listDevices.includes(data.id)) {
+          if (data.status === 'plug') {
+              console.log(data, "from frontend")
             getBuildDetails((buildDetails) => {
               if (buildDetails) {
                 const UpdatedData = { ...data, ...buildDetails }
@@ -70,7 +72,7 @@ const ConnectedDevices = () => {
           return prevDevices
         })
       } else {
-        console.log(output)
+        // console.log(output)
       }
     })
   }
@@ -92,8 +94,9 @@ const ConnectedDevices = () => {
     <div className="">
       <Online />
       <div className="p-5">
+      
         <div>
-        {listDevices.length <=0 ? (  <p className="font-bold text-2xl ">No Devices Connected</p>) : (  <p className="font-bold text-2xl">Connected Devices :</p>)}
+        {listDevices.length <= 0 ? (  <p className="font-bold text-2xl ">No Devices Connected</p>) : (  <p className="font-bold text-2xl">Connected Devices :</p>)}
         
         </div>
         {listDevices.length <= 0 ? (

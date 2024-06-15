@@ -6,18 +6,19 @@ import { DataContext } from '../context/DataProvider'
 
 const CommandTable = ({ item, index, callback }) => {
   const { setCommandstoOutput, pauseRunningCommand, listDevices,commandsLoading,setCommandsLoading } = useContext(DataContext)
-  console.log(pauseRunningCommand)
+  // console.log(pauseRunningCommand)
    
   const handleClick = (e) => {
     setCommandsLoading(true)
-    console.log(listDevices)
-    console.log(item)
+    setTimeout(()=> {
+      setCommandsLoading(false)
+    },1000)
     setCommandstoOutput(item.command)
     const coms = item.command
     e.preventDefault()
     e.stopPropagation()
     let device = listDevices[0].id
-    console.log(device)
+    // console.log(device)
     const shellComand = coms
     // console.log(shellComand)
     window.electron.ipcRenderer.invoke('shellCommand', shellComand, device).then((res) => {
@@ -26,17 +27,20 @@ const CommandTable = ({ item, index, callback }) => {
         console.log('Connected to WebSocket server')
       }
       socket.onmessage = (event) => {
+
         let last = JSON.parse(event.data)
-        console.log(last)
-        // let last =decode(event.data)
-        setTimeout(() => {
-          callback(last)
-        }, 500)
+        //  if(pauseRunningCommand == true){
+          setTimeout(() => {
+            callback(last)
+          }, 500)
+        //  }
+        //  else{
+        //   alert("you have paused the log please resume it before clicking the command")
+        //  }
+       
        
       }
-      setTimeout(()=> {
-        setCommandsLoading(false)
-      },1000)
+     
       
       socket.onclose = () => {
         console.log('Disconnected from WebSocket server')
